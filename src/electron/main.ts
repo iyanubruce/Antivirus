@@ -83,7 +83,10 @@ ipcMain.handle(
   async (
     event: Electron.IpcMainInvokeEvent,
     dir: string
-  ): Promise<Threat[] | ErrorResponse> => {
+  ): Promise<
+    | { totalFiles: number; threats: Threat[]; durationMs: number }
+    | ErrorResponse
+  > => {
     try {
       if (!dir || typeof dir !== "string") {
         return { error: "Invalid or missing directory path" };
@@ -150,8 +153,11 @@ ipcMain.handle(
         }
       };
 
+      const start = Date.now();
       await scanDir(dir);
-      return threats;
+      const durationMs = Date.now() - start;
+
+      return { totalFiles, threats, durationMs };
     } catch (error: any) {
       return { error: (error as Error).message };
     }
@@ -161,14 +167,12 @@ ipcMain.handle(
   "check-vulnerabilities",
   async (): Promise<Vulnerability[] | ErrorResponse> => {
     try {
-      // Get system information
       const systemInfo = await getSystemInfo();
 
       const queries = buildCPEQueries(systemInfo);
 
       const apiKey = process.env.NVD_API_KEY || undefined;
 
-      // Fetch vulnerabilities for each query
       const allVulnerabilities: Vulnerability[] = [];
 
       for (const query of queries) {

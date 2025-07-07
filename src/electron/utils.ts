@@ -210,7 +210,12 @@ class WindowsScanStrategy implements ScanStrategy {
     for (const sig of this.signatures) {
       const regex = new RegExp(sig.pattern, "i");
       if (regex.test(content.toString("utf-8"))) {
-        return { file: filePath, threat: sig.name };
+        return {
+          file: filePath,
+          threat: sig.name,
+          description: sig.description,
+          filePath: filePath,
+        };
       }
     }
     return null;
@@ -231,7 +236,12 @@ class LinuxScanStrategy implements ScanStrategy {
     for (const sig of this.signatures) {
       const regex = new RegExp(sig.pattern, "i");
       if (regex.test(content.toString("utf-8"))) {
-        return { file: filePath, threat: sig.name };
+        return {
+          file: filePath,
+          threat: sig.name,
+          description: sig.description,
+          filePath: filePath,
+        };
       }
     }
     return null;
@@ -252,7 +262,12 @@ class MacOSScanStrategy implements ScanStrategy {
     for (const sig of this.signatures) {
       const regex = new RegExp(sig.pattern, "i");
       if (regex.test(content.toString("utf-8"))) {
-        return { file: filePath, threat: sig.name };
+        return {
+          file: filePath,
+          threat: sig.name,
+          description: sig.description,
+          filePath: filePath,
+        };
       }
     }
     return null;

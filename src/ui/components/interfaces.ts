@@ -69,3 +69,11 @@ export interface ThreatProps {
   filePath: string;
   showToast: (message: string, type: "success" | "warning" | "error") => void;
 }
+
+export interface Threat {
+  file: string;
+  threat: string;
+  description?: string;
+  severity?: string;
+  filePath?: string; // Optional field for file path
+}

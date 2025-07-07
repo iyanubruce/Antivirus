@@ -2,6 +2,7 @@ export interface Signature {
   name: string;
   platform: "windows" | "linux" | "macos" | "all";
   pattern: string;
+  description?: string;
 }
 export interface ScanProgress {
   percentage: number;
@@ -85,6 +86,9 @@ export interface NVDResponse {
 export interface Threat {
   file: string;
   threat: string;
+  description?: string;
+  severity?: string;
+  filePath?: string; // Optional field for file path
 }
 
 export interface ErrorResponse {

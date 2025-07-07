@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Header, Sidebar, Dashboard } from "./components";
 
 import "./App.css";
-import { Threat } from "./components/subcomponents";
+import { Threat } from "./components/interfaces";
+import { ThreatComponent } from "./components/subcomponents";
 
 const ipcRenderer = window.require
   ? window.require("electron").ipcRenderer
@@ -26,7 +27,10 @@ interface VulnerabilityReportsProps {
 interface ScanResultsProps {
   theme: "light" | "dark";
   startScan: () => void;
+  totalFiles?: number;
+  scanDuration?: string;
   showToast: (message: string, type: "success" | "warning" | "error") => void;
+  scanResults?: Threat[];
 }
 
 interface SettingsProps {
@@ -362,7 +366,10 @@ const VulnerabilityReports: React.FC<VulnerabilityReportsProps> = ({
 const ScanResults: React.FC<ScanResultsProps> = ({
   theme,
   startScan,
+  scanDuration,
   showToast,
+  totalFiles = 0,
+  scanResults = [],
 }) => {
   return (
     <div className="max-w-4xl mx-auto w-full">
@@ -412,7 +419,7 @@ const ScanResults: React.FC<ScanResultsProps> = ({
                 >
                   Files Scanned
                 </p>
-                <p className="font-semibold mt-1">45,678</p>
+                <p className="font-semibold mt-1">{totalFiles}</p>
               </div>
               <div>
                 <p
@@ -422,7 +429,7 @@ const ScanResults: React.FC<ScanResultsProps> = ({
                 >
                   Scan Duration
                 </p>
-                <p className="font-semibold mt-1">5m 23s</p>
+                <p className="font-semibold mt-1">{scanDuration}</p>
               </div>
               <div>
                 <p
@@ -432,24 +439,33 @@ const ScanResults: React.FC<ScanResultsProps> = ({
                 >
                   Threats Found
                 </p>
-                <p className="font-semibold mt-1 text-red-600">2</p>
+                <p className="font-semibold mt-1 text-red-600">
+                  {scanResults.length}
+                </p>
               </div>
             </div>
           </div>
           <div className="space-y-4">
             <h4 className="font-medium">Detected Threats</h4>
-            <Threat
-              threatName="Suspicious file"
-              theme={theme}
-              showToast={showToast}
-              filePath="C:/Users/Downloads/setup.exe"
-            />
-            <Threat
-              threatName="Malware Detected"
-              theme={theme}
-              showToast={showToast}
-              filePath="C:/Users/AppData/Local/Temp/temp_file.dll"
-            />
+            {scanResults.length === 0 ? (
+              <p
+                className={`text-sm ${
+                  theme === "light" ? "text-gray-600" : "text-gray-400"
+                }`}
+              >
+                No threats detected in the last scan.
+              </p>
+            ) : (
+              scanResults.map((threat, idx) => (
+                <ThreatComponent
+                  key={idx}
+                  threatName={threat.threat || "Threat"}
+                  theme={theme}
+                  showToast={showToast}
+                  filePath={threat.filePath || "Unknown Path"}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -848,11 +864,19 @@ const ToastNotification: React.FC<ToastNotificationProps> = ({
   );
 };
 
-// Define types matching main.ts
-interface Threat {
-  file: string;
-  threat: string;
+// Converts milliseconds to a string in the format Xm Ys (e.g., 2m 30s)
+function msToSecondsString(ms: number): string {
+  if (typeof ms !== "number" || isNaN(ms) || ms < 0) return "0s";
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (minutes > 0) {
+    return `${minutes}m ${seconds}s`;
+  }
+  return `${seconds}s`;
 }
+
+// Define types matching main.ts
 
 interface Vulnerability {
   id: string;
@@ -885,6 +909,8 @@ const App: React.FC = () => {
     useState<boolean>(false);
   const [selectedVulnerability, setSelectedVulnerability] =
     useState<Vulnerability | null>(null);
+  const [filesScanned, setFilesScanned] = useState<number>(0);
+  const [scanDuration, setScanDuration] = useState<string>("0s");
   const [scanResults, setScanResults] = useState<Threat[]>([]);
   const [vulnResults, setVulnResults] = useState<Vulnerability[]>([]);
 
@@ -911,17 +937,30 @@ const App: React.FC = () => {
         return;
       }
 
-      const results: Threat[] | ErrorResponse = await ipcRenderer.invoke(
-        "scan-directory",
-        dir
-      );
+      const result:
+        | { totalFiles: number; threats: Threat[]; durationMs: number }
+        | ErrorResponse = await ipcRenderer.invoke("scan-directory", dir);
+
+      let results: Threat[] = [];
+      let totalFiles: number = 0;
+      let duration: number = 0;
+
+      if ("error" in result) {
+        results = [];
+      } else {
+        results = result.threats;
+        totalFiles = result.totalFiles;
+        duration = result.durationMs;
+      }
 
       setScanStatus("completed");
 
-      if ("error" in results) {
-        showToast(`Scan failed: ${results.error}`, "error");
+      if ("error" in result) {
+        showToast(`Scan failed: ${result.error}`, "error");
       } else {
         setScanResults(results);
+        setFilesScanned(totalFiles);
+        setScanDuration(msToSecondsString(duration));
         showToast(
           results.length
             ? `${results.length} threat${results.length > 1 ? "s" : ""} found`
@@ -1033,9 +1072,11 @@ const App: React.FC = () => {
           {activeTab === "scan-results" && (
             <ScanResults
               theme={theme}
+              totalFiles={filesScanned}
+              scanDuration={scanDuration}
               startScan={startScan}
               showToast={showToast}
-              // scanResults={scanResults} // Pass scanResults to display
+              scanResults={scanResults} // Pass scanResults to display
             />
           )}
           {activeTab === "settings" && <Settings theme={theme} />}
