@@ -1,5 +1,6 @@
-import { ProgressCircleProps } from "../interfaces";
-
+export interface ProgressCircleProps {
+  progress: number;
+}
 const ProgressCircle: React.FC<ProgressCircleProps> = ({ progress }) => {
   return (
     <div className="w-16 h-16 relative">

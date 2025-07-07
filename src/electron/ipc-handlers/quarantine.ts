@@ -114,23 +114,26 @@ ipcMain.handle(
         return [];
       }
 
-      const activeRecords = logs.filter(async (record) => {
-        if (record.action !== "quarantine") return false;
+      const activeRecords: QuarantineRecord[] = [];
+      for (const record of logs) {
+        if (record.action !== "quarantine") continue;
         try {
           await fs.access(record.quarantinedPath);
-          return !logs.some(
+          const hasUnquarantine = logs.some(
             (log) =>
               log.action === "unquarantine" &&
               log.quarantinedPath === record.quarantinedPath &&
               new Date(log.timestamp) > new Date(record.timestamp)
           );
+          if (!hasUnquarantine) {
+            activeRecords.push(record);
+          }
         } catch {
-          return false;
+          continue;
         }
-      });
+      }
 
-      const resolvedRecords = await Promise.all(activeRecords);
-      return resolvedRecords.filter(Boolean);
+      return activeRecords;
     } catch (error: any) {
       return { error: `Failed to load quarantine records: ${error.message}` };
     }

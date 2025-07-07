@@ -1,4 +1,8 @@
-import { HeaderProps } from "./interfaces";
+interface HeaderProps {
+  theme: "light" | "dark";
+  toggleTheme: () => void;
+}
+
 const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
   return (
     <header

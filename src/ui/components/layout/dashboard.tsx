@@ -1,5 +1,14 @@
-import { DashboardProps } from "./interfaces";
-import { ProgressCircle, SecurityChart } from "./subcomponents";
+import ProgressCircle from "../subcomponents/progress-circle";
+import SecurityChart from "../subcomponents/security-chart";
+
+interface DashboardProps {
+  theme: "light" | "dark";
+  scanStatus: "protected" | "scanning" | "checking" | "completed";
+  scanProgress: number;
+  startScan: () => Promise<void>;
+  checkVulnerabilities: () => Promise<void>;
+  showToast: (message: string, type: "success" | "warning" | "error") => void;
+}
 
 const Dashboard: React.FC<DashboardProps> = ({
   theme,

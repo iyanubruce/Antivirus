@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-
-interface QuarantineProps {
+export interface ThreatProps {
   theme: "light" | "dark";
-  showToast: (message: string, type: "success" | "warning" | "error") => void;
   threatName: string;
-  unQuarantineFile: (filePath: string) => Promise<void>;
+  quarantineFile: (filePath: string) => Promise<void>;
   filePath: string;
+  showToast: (message: string, type: "success" | "warning" | "error") => void;
 }
-
-const Quarantine: React.FC<QuarantineProps> = ({
+export const ThreatComponent: React.FC<ThreatProps> = ({
   theme,
   showToast,
   threatName,
-  unQuarantineFile,
+  quarantineFile,
   filePath,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,12 +19,15 @@ const Quarantine: React.FC<QuarantineProps> = ({
     setIsModalOpen(true);
   };
 
-  const handleConfirmUnquarantine = async () => {
+  const handleConfirmQuarantine = async () => {
     try {
-      await unQuarantineFile(filePath);
+      console.log("Quarantining file:", filePath); // Debug log
+      await quarantineFile(filePath);
       setIsModalOpen(false);
+      showToast(`File ${threatName} quarantined successfully`, "success");
     } catch (error: any) {
-      showToast(`Failed to unquarantine file: ${error.message}`, "error");
+      showToast(`Failed to quarantine file: ${error.message}`, "error");
+      console.error("Quarantine error:", error);
     }
   };
 
@@ -57,7 +58,7 @@ const Quarantine: React.FC<QuarantineProps> = ({
           onClick={handleOpenModal}
           className="text-red-600 hover:text-red-700 font-medium !rounded-button whitespace-nowrap"
         >
-          <i className="fas fa-shield-alt mr-2"></i>Unquarantine
+          <i className="fas fa-shield-alt mr-2"></i>Quarantine
         </button>
       </div>
       <div className="mt-2">
@@ -80,14 +81,14 @@ const Quarantine: React.FC<QuarantineProps> = ({
               theme === "light" ? "bg-white" : "bg-gray-800"
             } max-w-md w-full mx-4 rounded-lg shadow-xl p-6`}
           >
-            <h3 className="text-xl font-semibold mb-2">Confirm Unquarantine</h3>
+            <h3 className="text-xl font-semibold mb-2">Confirm Quarantine</h3>
             <p
               className={`${
                 theme === "light" ? "text-gray-600" : "text-gray-400"
               } mb-4`}
             >
-              Are you sure you want to unquarantine this file? The file will be
-              restored to its original location.
+              Are you sure you want to quarantine this file? The file will be
+              isolated and become inaccessible to prevent potential threats.
             </p>
             <div className="flex justify-end space-x-3">
               <button
@@ -101,10 +102,10 @@ const Quarantine: React.FC<QuarantineProps> = ({
                 Cancel
               </button>
               <button
-                onClick={handleConfirmUnquarantine}
+                onClick={handleConfirmQuarantine}
                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md !rounded-button whitespace-nowrap"
               >
-                Confirm Restore
+                Confirm Quarantine
               </button>
             </div>
           </div>
@@ -114,4 +115,4 @@ const Quarantine: React.FC<QuarantineProps> = ({
   );
 };
 
-export default Quarantine;
+export default ThreatComponent;

@@ -10,5 +10,101 @@
     "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T16-20-23-193Z_2025-07-07T14-23-14-459Z_test-macos.txt",
     "timestamp": "2025-07-07T16:20:40.590Z",
     "action": "unquarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T17-35-30-964Z_2025-07-07T14-23-14-900Z_test-windows.txt",
+    "timestamp": "2025-07-07T17-35-30-964Z",
+    "action": "quarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T17-35-30-964Z_2025-07-07T14-23-14-900Z_test-windows.txt",
+    "timestamp": "2025-07-07T18:02:52.266Z",
+    "action": "unquarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-03-04-221Z_2025-07-07T14-23-14-900Z_test-windows.txt",
+    "timestamp": "2025-07-07T18-03-04-221Z",
+    "action": "quarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-03-04-221Z_2025-07-07T14-23-14-900Z_test-windows.txt",
+    "timestamp": "2025-07-07T18:03:11.629Z",
+    "action": "unquarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-05-58-642Z_2025-07-07T14-23-14-459Z_test-macos.txt",
+    "timestamp": "2025-07-07T18-05-58-642Z",
+    "action": "quarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-05-58-642Z_2025-07-07T14-23-14-459Z_test-macos.txt",
+    "timestamp": "2025-07-07T18:06:05.147Z",
+    "action": "unquarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-06-16-562Z_2025-07-07T14-23-14-900Z_test-windows.txt",
+    "timestamp": "2025-07-07T18-06-16-562Z",
+    "action": "quarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-06-16-562Z_2025-07-07T14-23-14-900Z_test-windows.txt",
+    "timestamp": "2025-07-07T18:06:33.839Z",
+    "action": "unquarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-11-25-311Z_2025-07-07T14-23-14-459Z_test-macos.txt",
+    "timestamp": "2025-07-07T18-11-25-311Z",
+    "action": "quarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-11-25-311Z_2025-07-07T14-23-14-459Z_test-macos.txt",
+    "timestamp": "2025-07-07T18:19:01.634Z",
+    "action": "unquarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-19-12-161Z_2025-07-07T14-23-14-459Z_test-macos.txt",
+    "timestamp": "2025-07-07T18-19-12-161Z",
+    "action": "quarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-21-38-005Z_2025-07-07T14-23-14-072Z_test-linux.txt",
+    "timestamp": "2025-07-07T18-21-38-005Z",
+    "action": "quarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-19-12-161Z_2025-07-07T14-23-14-459Z_test-macos.txt",
+    "timestamp": "2025-07-07T18:28:29.788Z",
+    "action": "unquarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-21-38-005Z_2025-07-07T14-23-14-072Z_test-linux.txt",
+    "timestamp": "2025-07-07T18:29:43.800Z",
+    "action": "unquarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-31-07-600Z_2025-07-07T14-23-14-459Z_test-macos.txt",
+    "timestamp": "2025-07-07T18-31-07-600Z",
+    "action": "quarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T18-31-37-188Z_2025-07-07T14-23-14-072Z_test-linux.txt",
+    "timestamp": "2025-07-07T18-31-37-188Z",
+    "action": "quarantine"
   }
 ]

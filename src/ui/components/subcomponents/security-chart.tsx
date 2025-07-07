@@ -1,7 +1,9 @@
 import * as echarts from "echarts";
-import { SecurityChartProps } from "../interfaces";
 import { useEffect } from "react";
 
+export interface SecurityChartProps {
+  theme: "light" | "dark";
+}
 const SecurityChart: React.FC<SecurityChartProps> = ({ theme }) => {
   useEffect(() => {
     const chartDom = document.getElementById("securityChart");

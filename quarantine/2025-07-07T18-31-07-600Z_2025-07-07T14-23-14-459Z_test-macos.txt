@@ -1,0 +1,4 @@
+Mach-O test file for macOS detection. This is a harmless string designed to match the signature.
+Padding to meet length requirement............................
+launchctl load /test/path
+X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*

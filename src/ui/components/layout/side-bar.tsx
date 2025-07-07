@@ -1,4 +1,8 @@
-import { SidebarProps } from "./interfaces";
+interface SidebarProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  theme: "light" | "dark";
+}
 
 const Sidebar: React.FC<SidebarProps> = ({
   activeTab,
