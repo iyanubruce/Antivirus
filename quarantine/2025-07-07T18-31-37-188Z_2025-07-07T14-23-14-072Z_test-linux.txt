@@ -1,4 +1,0 @@
-\x7fELF test file for Linux detection. This is a harmless string.
-Padding to meet length requirement............................
-/bin/sh
-X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
