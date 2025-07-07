@@ -9,5 +9,6 @@
     "strict": true,
     "types": ["node"],
     "outDir": "../../dist-electron"
-  }
+  },
+  "include": ["./**/*"]
 }
