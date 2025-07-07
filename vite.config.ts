@@ -7,6 +7,11 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: "./",
   build: {
+    chunkSizeWarningLimit: 1000,
     outDir: "dist-react",
+  },
+  server: {
+    port: 5123,
+    strictPort: true,
   },
 });

@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
-    "strict": true,
     "target": "ESNext",
-    "module": "NodeNext",
-    "outDir": "../../dist-electron",
-    "skipLibCheck": true
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "types": ["node"],
+    "outDir": "../../dist-electron"
   }
 }
