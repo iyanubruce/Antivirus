@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Header, Sidebar, Dashboard } from "./components";
-
+import path from "path";
 import "./App.css";
-import { Threat } from "./components/interfaces";
-import { ThreatComponent } from "./components/subcomponents";
+import { QuarantineRecord, Threat } from "./components/interfaces";
+import { Quarantine, ThreatComponent } from "./components/subcomponents";
 
 const ipcRenderer = window.require
   ? window.require("electron").ipcRenderer
@@ -26,7 +26,10 @@ interface VulnerabilityReportsProps {
 
 interface ScanResultsProps {
   theme: "light" | "dark";
+  quarantineRecords: QuarantineRecord[];
   startScan: () => void;
+  unquarantineFile: (filePath: string) => Promise<void>;
+  quarantineFile: (filePath: string) => Promise<void>;
   totalFiles?: number;
   scanDuration?: string;
   showToast: (message: string, type: "success" | "warning" | "error") => void;
@@ -369,6 +372,9 @@ const ScanResults: React.FC<ScanResultsProps> = ({
   scanDuration,
   showToast,
   totalFiles = 0,
+  quarantineFile,
+  quarantineRecords,
+  unquarantineFile,
   scanResults = [],
 }) => {
   return (
@@ -462,6 +468,7 @@ const ScanResults: React.FC<ScanResultsProps> = ({
                   threatName={threat.threat || "Threat"}
                   theme={theme}
                   showToast={showToast}
+                  quarantineFile={quarantineFile}
                   filePath={threat.filePath || "Unknown Path"}
                 />
               ))
@@ -539,6 +546,35 @@ const ScanResults: React.FC<ScanResultsProps> = ({
               </div>
             </div>
           ))}
+        </div>
+      </div>
+      <div
+        className={`rounded-lg mt-4 ${
+          theme === "light" ? "bg-white shadow-sm" : "bg-gray-800 shadow-md"
+        } p-6`}
+      >
+        <div className="space-y-4">
+          <h4 className="font-medium">Quarantined Files</h4>
+          {quarantineRecords.length === 0 ? (
+            <p
+              className={`text-sm ${
+                theme === "light" ? "text-gray-600" : "text-gray-400"
+              }`}
+            >
+              No threats detected in the last scan.
+            </p>
+          ) : (
+            quarantineRecords.map((threat, idx) => (
+              <Quarantine
+                key={idx}
+                threatName={threat.originalPath || "Threat"}
+                theme={theme}
+                showToast={showToast}
+                unQuarantineFile={unquarantineFile}
+                filePath={threat.quarantinedPath || "Unknown Path"}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>
@@ -913,6 +949,75 @@ const App: React.FC = () => {
   const [scanDuration, setScanDuration] = useState<string>("0s");
   const [scanResults, setScanResults] = useState<Threat[]>([]);
   const [vulnResults, setVulnResults] = useState<Vulnerability[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [quarantineRecords, setQuarantineRecords] = useState<
+    QuarantineRecord[]
+  >([]);
+  const quarantineFile = async (filePath: string) => {
+    try {
+      const result: void | ErrorResponse = await ipcRenderer.invoke(
+        "quarantine-file",
+        filePath
+      );
+      if (result && "error" in result) {
+        showToast(`Failed to quarantine file: ${result.error}`, "error");
+      } else {
+        setScanResults((prev) =>
+          prev.filter((threat) => threat.file !== filePath)
+        );
+        showToast(
+          `File ${path.basename(filePath)} quarantined successfully`,
+          "success"
+        );
+      }
+    } catch (error: any) {
+      showToast(`Quarantine error: ${error.message}`, "error");
+    }
+  };
+
+  const unquarantineFile = async (quarantinedPath: string) => {
+    try {
+      const result: void | ErrorResponse = await ipcRenderer.invoke(
+        "unquarantine-file",
+        quarantinedPath
+      );
+      if (result && "error" in result) {
+        showToast(`Failed to unquarantine file: ${result.error}`, "error");
+      } else {
+        showToast(
+          `File ${path.basename(quarantinedPath)} unquarantined successfully`,
+          "success"
+        );
+      }
+    } catch (error: any) {
+      showToast(`Unquarantine error: ${error.message}`, "error");
+    }
+  };
+  const fetchQuarantineRecords = async () => {
+    setIsLoading(true);
+    try {
+      const result: QuarantineRecord[] | ErrorResponse =
+        await ipcRenderer.invoke("get-quarantine-records");
+      if ("error" in result) {
+        showToast(
+          `Failed to load quarantine records: ${result.error}`,
+          "error"
+        );
+        setQuarantineRecords([]);
+      } else {
+        setQuarantineRecords(result);
+      }
+    } catch (error: any) {
+      showToast(`Error loading quarantine records: ${error.message}`, "error");
+      setQuarantineRecords([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuarantineRecords();
+  }, []);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -1034,7 +1139,16 @@ const App: React.FC = () => {
       ipcRenderer.removeListener("scan-progress", handleProgress);
     };
   }, []);
-
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen w-screen bg-gray-50 dark:bg-gray-900">
+        <div className="text-center">
+          <i className="fas fa-spinner fa-spin text-4xl text-blue-600 mb-4"></i>
+          <p className="text-lg font-medium">Loading...</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div
       className={`min-h-screen w-screen h-full ${
@@ -1074,6 +1188,9 @@ const App: React.FC = () => {
               theme={theme}
               totalFiles={filesScanned}
               scanDuration={scanDuration}
+              quarantineFile={quarantineFile}
+              unquarantineFile={unquarantineFile}
+              quarantineRecords={quarantineRecords}
               startScan={startScan}
               showToast={showToast}
               scanResults={scanResults} // Pass scanResults to display

@@ -4,6 +4,7 @@ const Threats: React.FC<ThreatProps> = ({
   theme,
   showToast,
   threatName,
+  quarantineFile,
   filePath,
 }) => {
   return (
@@ -49,7 +50,9 @@ const Threats: React.FC<ThreatProps> = ({
               ? "bg-gray-100 hover:bg-gray-200"
               : "bg-gray-700 hover:bg-gray-600"
           } px-4 py-2 rounded-md !rounded-button whitespace-nowrap">Cancel</button>
-          <button id="confirmQuarantine" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md !rounded-button whitespace-nowrap">Confirm Quarantine</button>
+          <button id="confirmQuarantine" onclick={${quarantineFile(
+            filePath
+          )}} class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md !rounded-button whitespace-nowrap">Confirm Quarantine</button>
         </div>
       </div>
     `;

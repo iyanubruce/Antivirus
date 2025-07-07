@@ -66,6 +66,14 @@ export interface ToastNotificationProps {
 export interface ThreatProps {
   theme: "light" | "dark";
   threatName: string;
+  quarantineFile: (filePath: string) => Promise<void>;
+  filePath: string;
+  showToast: (message: string, type: "success" | "warning" | "error") => void;
+}
+export interface QuarantineProps {
+  theme: "light" | "dark";
+  threatName: string;
+  unQuarantineFile: (filePath: string) => Promise<void>;
   filePath: string;
   showToast: (message: string, type: "success" | "warning" | "error") => void;
 }
@@ -76,4 +84,11 @@ export interface Threat {
   description?: string;
   severity?: string;
   filePath?: string; // Optional field for file path
+}
+
+export interface QuarantineRecord {
+  originalPath: string;
+  quarantinedPath: string;
+  timestamp: string;
+  action?: "quarantine" | "unquarantine";
 }

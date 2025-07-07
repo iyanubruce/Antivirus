@@ -1,6 +1,9 @@
 import * as os from "os";
 import { exec } from "child_process";
 import { promisify } from "util";
+import { promises as fs } from "fs";
+import path from "path";
+
 import {
   NVDResponse,
   Signature,
@@ -8,6 +11,7 @@ import {
   Threat,
   Vulnerability,
 } from "./interfaces";
+
 export function isDevMode(): boolean {
   return process.env.NODE_ENV === "development";
 }
@@ -192,7 +196,7 @@ interface ScanProgress {
 }
 
 // Strategy Pattern: Interface for scanning strategies
-interface ScanStrategy {
+export interface ScanStrategy {
   scan(filePath: string, content: Buffer): Threat | null;
 }
 
@@ -302,3 +306,21 @@ export class ScanContext {
     return this.strategy.scan(filePath, content);
   }
 }
+
+// Strategy Pattern: Interface for quarantine strategies
+export interface QuarantineStrategy {
+  quarantine(filePath: string): Promise<void>;
+}
+
+export interface QuarantineRecord {
+  originalPath: string;
+  quarantinedPath: string;
+  timestamp: string;
+  action?: "quarantine" | "unquarantine";
+}
+// Strategy Pattern: Interface for unquarantine strategies
+export interface UnquarantineStrategy {
+  unquarantine(quarantinedPath: string, originalPath: string): Promise<void>;
+}
+
+// Concrete strategy for Windows quarantine
