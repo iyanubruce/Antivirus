@@ -130,5 +130,17 @@
     "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-07T19-01-38-240Z_2025-07-07T14-23-14-072Z_test-linux.txt",
     "timestamp": "2025-07-07T19:03:09.717Z",
     "action": "unquarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-13T22-22-44-643Z_2025-07-07T14-23-14-072Z_test-linux.txt",
+    "timestamp": "2025-07-13T22-22-44-643Z",
+    "action": "quarantine"
+  },
+  {
+    "originalPath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+    "quarantinedPath": "/Users/iyanuoluwa/Documents/Antivirus/quarantine/2025-07-13T22-22-44-643Z_2025-07-07T14-23-14-072Z_test-linux.txt",
+    "timestamp": "2025-07-13T23:06:24.117Z",
+    "action": "unquarantine"
   }
 ]

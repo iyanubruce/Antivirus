@@ -1,0 +1,41 @@
+[
+  {
+    "time": "1752447965975",
+    "threats": [
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt"
+      }
+    ],
+    "filesScanned": 9,
+    "action": "threatScan"
+  },
+  {
+    "time": "1752447989039",
+    "threats": [
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt"
+      }
+    ],
+    "filesScanned": 10,
+    "action": "threatScan"
+  }
+]

@@ -2,7 +2,12 @@ import { app } from "electron";
 import path from "path";
 import { promises as fs } from "fs";
 import { fileURLToPath } from "url";
-import { QuarantineRecord, Signature, Threat } from "../types/interfaces.js";
+import {
+  QuarantineRecord,
+  ScanResult,
+  Signature,
+  Threat,
+} from "../types/interfaces.js";
 import {
   QuarantineStrategy,
   ScanStrategy,
@@ -34,6 +39,10 @@ export const quarantineDir = isDevMode()
   ? path.join(__dirname, "../../quarantine")
   : path.join(app.getPath("userData"), "quarantine");
 
+export const scanResultsDir = isDevMode()
+  ? path.join(__dirname, "../../scan-results")
+  : path.join(app.getPath("userData"), "scan-results");
+
 export async function appendQuarantineLog(
   record: QuarantineRecord,
   action: "quarantine" | "unquarantine" = "quarantine"
@@ -51,6 +60,32 @@ export async function appendQuarantineLog(
     await fs.writeFile(logPath, JSON.stringify(logs, null, 2));
   } catch (error: any) {
     console.error(`Failed to write quarantine log: ${error.message}`);
+    throw error;
+  }
+}
+export async function appendScanResult(record: ScanResult) {
+  const logPath = path.join(scanResultsDir, "scan-results.json");
+
+  // Check if directory exists before creating
+  try {
+    await fs.access(scanResultsDir);
+  } catch {
+    await fs.mkdir(scanResultsDir, { recursive: true });
+  }
+
+  let logs: ScanResult[] = [];
+  try {
+    const data = await fs.readFile(logPath, "utf-8");
+    logs = JSON.parse(data);
+  } catch {
+    logs = [];
+  }
+  logs.push({ ...record });
+  console.log(`Appending scan result: ${JSON.stringify(record)}`);
+  try {
+    await fs.writeFile(logPath, JSON.stringify(logs, null, 2));
+  } catch (error: any) {
+    console.error(`Failed to write scan result log: ${error.message}`);
     throw error;
   }
 }

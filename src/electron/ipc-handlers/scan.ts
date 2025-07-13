@@ -2,8 +2,9 @@ import { ipcMain } from "electron";
 import { promises as fs } from "fs";
 import path from "path";
 import { loadSignatures } from "../utils/signatures.js";
-import { ScanContext, isDevMode } from "../utils/config.js";
+import { ScanContext, appendScanResult, isDevMode } from "../utils/config.js";
 import { ErrorResponse, ScanProgress, Threat } from "../types/interfaces.js";
+import { faLadderWater } from "@fortawesome/free-solid-svg-icons";
 
 ipcMain.handle(
   "scan-directory",
@@ -83,7 +84,13 @@ ipcMain.handle(
       const start = Date.now();
       await scanDir(dir);
       const durationMs = Date.now() - start;
-
+      const lastScanDate = Date.now().toString();
+      appendScanResult({
+        time: lastScanDate,
+        threats,
+        filesScanned: scannedFiles,
+        action: "threatScan",
+      });
       return { totalFiles, threats, durationMs };
     } catch (error: any) {
       return { error: (error as Error).message };

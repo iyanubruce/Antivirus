@@ -7,6 +7,14 @@ export interface QuarantineRecord {
   timestamp: string;
   action?: "quarantine" | "unquarantine";
 }
+export interface ScanResult {
+  time?: string;
+  message?: string;
+  threats?: Threat[];
+  filesScanned?: number;
+  vulnerabilities?: Vulnerability[];
+  action: "threatScan" | "vulnerabilityScan";
+}
 export interface ScanProgress {
   percentage: number;
   scannedFiles?: number;
