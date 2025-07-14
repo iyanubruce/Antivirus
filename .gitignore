@@ -7,7 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-quarantine
 node_modules
 dist
 dist-react
@@ -23,4 +22,6 @@ dist-electron
 *.ntvs*
 *.njsproj
 *.sln
+quarantine
+scan-results
 *.sw?

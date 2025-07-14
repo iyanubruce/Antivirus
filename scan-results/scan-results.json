@@ -37,5 +37,979 @@
     ],
     "filesScanned": 10,
     "action": "threatScan"
+  },
+  {
+    "time": "1,752,448,693,917",
+    "vulnerabilities": [
+      {
+        "id": "CVE-2016-10541",
+        "description": "The npm module \"shell-quote\" 1.6.0 and earlier cannot correctly escape \">\" and \"<\" operator used for redirection in shell. Applications that depend on shell-quote may also be vulnerable. A malicious user could perform code injection.",
+        "severity": "CRITICAL",
+        "cvssScore": 9.8,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2018-3746",
+        "description": "The pdfinfojs NPM module versions <= 0.3.6 has a command injection vulnerability that allows an attacker to execute arbitrary commands on the victim's machine.",
+        "severity": "CRITICAL",
+        "cvssScore": 9.8,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10658",
+        "description": "native-opencv is the OpenCV library installed via npm native-opencv downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+        "severity": "HIGH",
+        "cvssScore": 8.1,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2021-43803",
+        "description": "Next.js is a React framework. In versions of Next.js prior to 12.0.5 or 11.1.3, invalid or malformed URLs could lead to a server crash. In order to be affected by this issue, the deployment must use Next.js versions above 11.1.0 and below 12.0.5, Node.js above 15.0.0, and next start or a custom server. Deployments on Vercel are not affected, along with similar environments where invalid requests are filtered before reaching Next.js. Versions 12.0.5 and 11.1.3 contain patches for this issue.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "Node.js v22.17.0"
+      },
+      {
+        "id": "CVE-2016-3956",
+        "description": "The CLI in npm before 2.15.1 and 3.x before 3.8.3, as used in Node.js 0.10 before 0.10.44, 0.12 before 0.12.13, 4 before 4.4.2, and 5 before 5.10.0, includes bearer tokens with arbitrary requests, which allows remote HTTP servers to obtain sensitive information by reading Authorization headers.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10703",
+        "description": "A regular expression Denial of Service (DoS) vulnerability in the file lib/ecstatic.js of the ecstatic npm package, before version 2.0.0, allows a remote attacker to overload and crash a server by passing a maliciously crafted string.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2018-7560",
+        "description": "index.js in the Anton Myshenin aws-lambda-multipart-parser NPM package before 0.1.2 has a Regular Expression Denial of Service (ReDoS) issue via a crafted multipart/form-data boundary string.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16062",
+        "description": "node-tkinter was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16046",
+        "description": "`mariadb` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-3012",
+        "description": "IBM API Connect (aka APIConnect) before 5.0.3.0 with NPM before 2.2.8 includes certain internal server credentials in the software package, which might allow remote attackers to bypass intended access restrictions by leveraging knowledge of these credentials.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-8914",
+        "description": "sinopia, as used in SAP HANA XS 1.00 and 2.00, allows remote attackers to hijack npm packages or host arbitrary files by leveraging an insecure user creation policy, aka SAP Security Note 2407694.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-1000219",
+        "description": "npm/KyleRoss windows-cpu all versions vulnerable to command injection resulting in code execution as Node.js user",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2018-7408",
+        "description": "An issue was discovered in an npm 5.7.0 2018-02-21 pre-release (marked as \"next: 5.7.0\" and therefore automatically installed by an \"npm upgrade -g npm\" command, and also announced in the vendor's blog without mention of pre-release status). It might allow local users to bypass intended filesystem access restrictions because ownerships of /etc and /usr directories are being changed unexpectedly, related to a \"correctMkdir\" issue.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10601",
+        "description": "webdrvr is a npm wrapper for Selenium Webdriver including Chromedriver / IEDriver / IOSDriver / Ghostdriver. webdrvr downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16003",
+        "description": "windows-build-tools is a module for installing C++ Build Tools for Windows using npm. windows-build-tools versions below 1.0.0 download resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16047",
+        "description": "mysqljs was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16061",
+        "description": "tkinter was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10562",
+        "description": "iedriver is an NPM wrapper for Selenium IEDriver. iedriver versions below 3.0.0 download binary resources over HTTP, which leaves the module vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10579",
+        "description": "Chromedriver is an NPM wrapper for selenium ChromeDriver. Chromedriver before 2.26.1 downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10603",
+        "description": "air-sdk is a NPM wrapper for the Adobe AIR SDK. air-sdk downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10625",
+        "description": "headless-browser-lite is a minimal npm installer for phantomjs and slimerjs with no external dependencies. headless-browser-lite downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10639",
+        "description": "redis-srvr is a npm wrapper for redis-server. redis-srvr downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10644",
+        "description": "slimerjs-edge is a npm wrapper for installing the bleeding edge version of slimerjs. slimerjs-edge downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10695",
+        "description": "The npm-test-sqlite3-trunk module provides asynchronous, non-blocking SQLite3 bindings. npm-test-sqlite3-trunk downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16044",
+        "description": "`d3.js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16045",
+        "description": "`jquery.js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16048",
+        "description": "`node-sqlite` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16049",
+        "description": "`nodesqlite` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16050",
+        "description": "`sqlite.js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16051",
+        "description": "`sqliter` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16052",
+        "description": "`node-fabric` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16053",
+        "description": "`fabric-js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16054",
+        "description": "`nodefabric` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16055",
+        "description": "`sqlserver` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16056",
+        "description": "mssql.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16057",
+        "description": "nodemssql was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16058",
+        "description": "gruntcli was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16059",
+        "description": "mssql-node was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16060",
+        "description": "babelcli was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16063",
+        "description": "node-opensl was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16064",
+        "description": "node-openssl was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16065",
+        "description": "openssl.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16066",
+        "description": "opencv.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16067",
+        "description": "node-opencv was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16068",
+        "description": "ffmepg was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16069",
+        "description": "nodeffmpeg was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16070",
+        "description": "nodecaffe was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16071",
+        "description": "nodemailer-js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16072",
+        "description": "nodemailer.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16073",
+        "description": "noderequest was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16074",
+        "description": "crossenv was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      }
+    ],
+    "action": "vulnerabilityScan"
+  },
+  {
+    "time": "1,752,448,716,970",
+    "vulnerabilities": [
+      {
+        "id": "CVE-2016-10541",
+        "description": "The npm module \"shell-quote\" 1.6.0 and earlier cannot correctly escape \">\" and \"<\" operator used for redirection in shell. Applications that depend on shell-quote may also be vulnerable. A malicious user could perform code injection.",
+        "severity": "CRITICAL",
+        "cvssScore": 9.8,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2018-3746",
+        "description": "The pdfinfojs NPM module versions <= 0.3.6 has a command injection vulnerability that allows an attacker to execute arbitrary commands on the victim's machine.",
+        "severity": "CRITICAL",
+        "cvssScore": 9.8,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10658",
+        "description": "native-opencv is the OpenCV library installed via npm native-opencv downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+        "severity": "HIGH",
+        "cvssScore": 8.1,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2021-43803",
+        "description": "Next.js is a React framework. In versions of Next.js prior to 12.0.5 or 11.1.3, invalid or malformed URLs could lead to a server crash. In order to be affected by this issue, the deployment must use Next.js versions above 11.1.0 and below 12.0.5, Node.js above 15.0.0, and next start or a custom server. Deployments on Vercel are not affected, along with similar environments where invalid requests are filtered before reaching Next.js. Versions 12.0.5 and 11.1.3 contain patches for this issue.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "Node.js v22.17.0"
+      },
+      {
+        "id": "CVE-2016-3956",
+        "description": "The CLI in npm before 2.15.1 and 3.x before 3.8.3, as used in Node.js 0.10 before 0.10.44, 0.12 before 0.12.13, 4 before 4.4.2, and 5 before 5.10.0, includes bearer tokens with arbitrary requests, which allows remote HTTP servers to obtain sensitive information by reading Authorization headers.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10703",
+        "description": "A regular expression Denial of Service (DoS) vulnerability in the file lib/ecstatic.js of the ecstatic npm package, before version 2.0.0, allows a remote attacker to overload and crash a server by passing a maliciously crafted string.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2018-7560",
+        "description": "index.js in the Anton Myshenin aws-lambda-multipart-parser NPM package before 0.1.2 has a Regular Expression Denial of Service (ReDoS) issue via a crafted multipart/form-data boundary string.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16062",
+        "description": "node-tkinter was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16046",
+        "description": "`mariadb` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-3012",
+        "description": "IBM API Connect (aka APIConnect) before 5.0.3.0 with NPM before 2.2.8 includes certain internal server credentials in the software package, which might allow remote attackers to bypass intended access restrictions by leveraging knowledge of these credentials.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-8914",
+        "description": "sinopia, as used in SAP HANA XS 1.00 and 2.00, allows remote attackers to hijack npm packages or host arbitrary files by leveraging an insecure user creation policy, aka SAP Security Note 2407694.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-1000219",
+        "description": "npm/KyleRoss windows-cpu all versions vulnerable to command injection resulting in code execution as Node.js user",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2018-7408",
+        "description": "An issue was discovered in an npm 5.7.0 2018-02-21 pre-release (marked as \"next: 5.7.0\" and therefore automatically installed by an \"npm upgrade -g npm\" command, and also announced in the vendor's blog without mention of pre-release status). It might allow local users to bypass intended filesystem access restrictions because ownerships of /etc and /usr directories are being changed unexpectedly, related to a \"correctMkdir\" issue.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10601",
+        "description": "webdrvr is a npm wrapper for Selenium Webdriver including Chromedriver / IEDriver / IOSDriver / Ghostdriver. webdrvr downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16003",
+        "description": "windows-build-tools is a module for installing C++ Build Tools for Windows using npm. windows-build-tools versions below 1.0.0 download resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16047",
+        "description": "mysqljs was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16061",
+        "description": "tkinter was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10562",
+        "description": "iedriver is an NPM wrapper for Selenium IEDriver. iedriver versions below 3.0.0 download binary resources over HTTP, which leaves the module vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10579",
+        "description": "Chromedriver is an NPM wrapper for selenium ChromeDriver. Chromedriver before 2.26.1 downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10603",
+        "description": "air-sdk is a NPM wrapper for the Adobe AIR SDK. air-sdk downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10625",
+        "description": "headless-browser-lite is a minimal npm installer for phantomjs and slimerjs with no external dependencies. headless-browser-lite downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10639",
+        "description": "redis-srvr is a npm wrapper for redis-server. redis-srvr downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10644",
+        "description": "slimerjs-edge is a npm wrapper for installing the bleeding edge version of slimerjs. slimerjs-edge downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10695",
+        "description": "The npm-test-sqlite3-trunk module provides asynchronous, non-blocking SQLite3 bindings. npm-test-sqlite3-trunk downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16044",
+        "description": "`d3.js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16045",
+        "description": "`jquery.js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16048",
+        "description": "`node-sqlite` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16049",
+        "description": "`nodesqlite` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16050",
+        "description": "`sqlite.js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16051",
+        "description": "`sqliter` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16052",
+        "description": "`node-fabric` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16053",
+        "description": "`fabric-js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16054",
+        "description": "`nodefabric` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16055",
+        "description": "`sqlserver` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16056",
+        "description": "mssql.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16057",
+        "description": "nodemssql was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16058",
+        "description": "gruntcli was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16059",
+        "description": "mssql-node was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16060",
+        "description": "babelcli was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16063",
+        "description": "node-opensl was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16064",
+        "description": "node-openssl was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16065",
+        "description": "openssl.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16066",
+        "description": "opencv.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16067",
+        "description": "node-opencv was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16068",
+        "description": "ffmepg was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16069",
+        "description": "nodeffmpeg was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16070",
+        "description": "nodecaffe was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16071",
+        "description": "nodemailer-js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16072",
+        "description": "nodemailer.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16073",
+        "description": "noderequest was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16074",
+        "description": "crossenv was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      }
+    ],
+    "action": "vulnerabilityScan"
+  },
+  {
+    "time": "1,752,448,726,830",
+    "vulnerabilities": [
+      {
+        "id": "CVE-2016-10541",
+        "description": "The npm module \"shell-quote\" 1.6.0 and earlier cannot correctly escape \">\" and \"<\" operator used for redirection in shell. Applications that depend on shell-quote may also be vulnerable. A malicious user could perform code injection.",
+        "severity": "CRITICAL",
+        "cvssScore": 9.8,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2018-3746",
+        "description": "The pdfinfojs NPM module versions <= 0.3.6 has a command injection vulnerability that allows an attacker to execute arbitrary commands on the victim's machine.",
+        "severity": "CRITICAL",
+        "cvssScore": 9.8,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10658",
+        "description": "native-opencv is the OpenCV library installed via npm native-opencv downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+        "severity": "HIGH",
+        "cvssScore": 8.1,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2021-43803",
+        "description": "Next.js is a React framework. In versions of Next.js prior to 12.0.5 or 11.1.3, invalid or malformed URLs could lead to a server crash. In order to be affected by this issue, the deployment must use Next.js versions above 11.1.0 and below 12.0.5, Node.js above 15.0.0, and next start or a custom server. Deployments on Vercel are not affected, along with similar environments where invalid requests are filtered before reaching Next.js. Versions 12.0.5 and 11.1.3 contain patches for this issue.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "Node.js v22.17.0"
+      },
+      {
+        "id": "CVE-2016-3956",
+        "description": "The CLI in npm before 2.15.1 and 3.x before 3.8.3, as used in Node.js 0.10 before 0.10.44, 0.12 before 0.12.13, 4 before 4.4.2, and 5 before 5.10.0, includes bearer tokens with arbitrary requests, which allows remote HTTP servers to obtain sensitive information by reading Authorization headers.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10703",
+        "description": "A regular expression Denial of Service (DoS) vulnerability in the file lib/ecstatic.js of the ecstatic npm package, before version 2.0.0, allows a remote attacker to overload and crash a server by passing a maliciously crafted string.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2018-7560",
+        "description": "index.js in the Anton Myshenin aws-lambda-multipart-parser NPM package before 0.1.2 has a Regular Expression Denial of Service (ReDoS) issue via a crafted multipart/form-data boundary string.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16062",
+        "description": "node-tkinter was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16046",
+        "description": "`mariadb` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "severity": "HIGH",
+        "cvssScore": 7.5,
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-3012",
+        "description": "IBM API Connect (aka APIConnect) before 5.0.3.0 with NPM before 2.2.8 includes certain internal server credentials in the software package, which might allow remote attackers to bypass intended access restrictions by leveraging knowledge of these credentials.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-8914",
+        "description": "sinopia, as used in SAP HANA XS 1.00 and 2.00, allows remote attackers to hijack npm packages or host arbitrary files by leveraging an insecure user creation policy, aka SAP Security Note 2407694.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-1000219",
+        "description": "npm/KyleRoss windows-cpu all versions vulnerable to command injection resulting in code execution as Node.js user",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2018-7408",
+        "description": "An issue was discovered in an npm 5.7.0 2018-02-21 pre-release (marked as \"next: 5.7.0\" and therefore automatically installed by an \"npm upgrade -g npm\" command, and also announced in the vendor's blog without mention of pre-release status). It might allow local users to bypass intended filesystem access restrictions because ownerships of /etc and /usr directories are being changed unexpectedly, related to a \"correctMkdir\" issue.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10601",
+        "description": "webdrvr is a npm wrapper for Selenium Webdriver including Chromedriver / IEDriver / IOSDriver / Ghostdriver. webdrvr downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16003",
+        "description": "windows-build-tools is a module for installing C++ Build Tools for Windows using npm. windows-build-tools versions below 1.0.0 download resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16047",
+        "description": "mysqljs was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16061",
+        "description": "tkinter was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10562",
+        "description": "iedriver is an NPM wrapper for Selenium IEDriver. iedriver versions below 3.0.0 download binary resources over HTTP, which leaves the module vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10579",
+        "description": "Chromedriver is an NPM wrapper for selenium ChromeDriver. Chromedriver before 2.26.1 downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10603",
+        "description": "air-sdk is a NPM wrapper for the Adobe AIR SDK. air-sdk downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10625",
+        "description": "headless-browser-lite is a minimal npm installer for phantomjs and slimerjs with no external dependencies. headless-browser-lite downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10639",
+        "description": "redis-srvr is a npm wrapper for redis-server. redis-srvr downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10644",
+        "description": "slimerjs-edge is a npm wrapper for installing the bleeding edge version of slimerjs. slimerjs-edge downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested binary with an attacker controlled binary if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2016-10695",
+        "description": "The npm-test-sqlite3-trunk module provides asynchronous, non-blocking SQLite3 bindings. npm-test-sqlite3-trunk downloads binary resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16044",
+        "description": "`d3.js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16045",
+        "description": "`jquery.js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16048",
+        "description": "`node-sqlite` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16049",
+        "description": "`nodesqlite` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16050",
+        "description": "`sqlite.js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16051",
+        "description": "`sqliter` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16052",
+        "description": "`node-fabric` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16053",
+        "description": "`fabric-js` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16054",
+        "description": "`nodefabric` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16055",
+        "description": "`sqlserver` was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16056",
+        "description": "mssql.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16057",
+        "description": "nodemssql was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16058",
+        "description": "gruntcli was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16059",
+        "description": "mssql-node was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16060",
+        "description": "babelcli was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16063",
+        "description": "node-opensl was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16064",
+        "description": "node-openssl was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16065",
+        "description": "openssl.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16066",
+        "description": "opencv.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16067",
+        "description": "node-opencv was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16068",
+        "description": "ffmepg was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16069",
+        "description": "nodeffmpeg was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16070",
+        "description": "nodecaffe was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16071",
+        "description": "nodemailer-js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16072",
+        "description": "nodemailer.js was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16073",
+        "description": "noderequest was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      },
+      {
+        "id": "CVE-2017-16074",
+        "description": "crossenv was a malicious module published with the intent to hijack environment variables. It has been unpublished by npm.",
+        "affectedComponent": "npm 11.4.2"
+      }
+    ],
+    "action": "vulnerabilityScan"
+  },
+  {
+    "time": "1,752,448,732,725",
+    "vulnerabilities": [],
+    "action": "vulnerabilityScan"
+  },
+  {
+    "time": "1752448741946",
+    "threats": [
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt"
+      }
+    ],
+    "filesScanned": 10,
+    "action": "threatScan"
+  },
+  {
+    "time": "1752448748041",
+    "threats": [
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt"
+      }
+    ],
+    "filesScanned": 10,
+    "action": "threatScan"
+  },
+  {
+    "time": "1752448755777",
+    "threats": [
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt"
+      }
+    ],
+    "filesScanned": 10,
+    "action": "threatScan"
+  },
+  {
+    "time": "1752449232391",
+    "threats": [
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt"
+      }
+    ],
+    "filesScanned": 10,
+    "action": "threatScan"
+  },
+  {
+    "time": "1752449238826",
+    "threats": [
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt"
+      }
+    ],
+    "filesScanned": 10,
+    "action": "threatScan"
+  },
+  {
+    "time": "1752485109653",
+    "threats": [
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-072Z_test-linux.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-459Z_test-macos.txt"
+      },
+      {
+        "file": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt",
+        "threat": "EICAR Test File",
+        "filePath": "/Users/iyanuoluwa/Downloads/2025-07-07T14-23-14-900Z_test-windows.txt"
+      }
+    ],
+    "filesScanned": 10,
+    "action": "threatScan"
   }
 ]

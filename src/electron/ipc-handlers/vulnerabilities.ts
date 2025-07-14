@@ -5,6 +5,7 @@ import {
   fetchVulnerabilities,
 } from "../utils/system-info.js";
 import { ErrorResponse, Vulnerability } from "../types/interfaces.js";
+import { appendScanResult } from "../utils/config.js";
 
 ipcMain.handle(
   "check-vulnerabilities",
@@ -37,7 +38,12 @@ ipcMain.handle(
       uniqueVulnerabilities.sort(
         (a, b) => (b.cvssScore || 0) - (a.cvssScore || 0)
       );
-
+      const lastScanTime = Date.now().toLocaleString();
+      appendScanResult({
+        time: lastScanTime,
+        vulnerabilities: uniqueVulnerabilities,
+        action: "vulnerabilityScan",
+      });
       return uniqueVulnerabilities;
     } catch (error: any) {
       return { error: (error as Error).message };
