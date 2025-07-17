@@ -28,7 +28,6 @@ const Dashboard: React.FC<DashboardProps> = ({
   vulnerabilityDetails,
   startScan,
   checkVulnerabilities,
-  showToast,
 }) => {
   return (
     <div>

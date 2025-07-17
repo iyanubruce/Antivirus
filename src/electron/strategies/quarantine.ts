@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { appendQuarantineLog, quarantineDir } from "../utils/config.js";
+import { appendQuarantineLog } from "../utils/config.js";
 import { QuarantineStrategy } from "../types/strategies.js";
 import { QuarantineRecord } from "../types/interfaces.js";
 

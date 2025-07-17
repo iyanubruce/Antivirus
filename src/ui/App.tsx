@@ -3,7 +3,7 @@ import { Header, Sidebar, Dashboard } from "./components/layout";
 import {
   ScanResults,
   VulnerabilityReports,
-  Settings,
+  // Settings,
   VulnerabilityModal,
   ToastNotification,
 } from "./components/core";

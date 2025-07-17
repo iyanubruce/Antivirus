@@ -2,6 +2,13 @@
   "appId": "com.n-ziermann.antivirus",
   "files": ["dist-electron", "dist-react"],
   "icon": "./desktop-icon.png",
+  "extraResources": [
+    {
+      "from": "signatures",
+      "to": "signatures"
+    }
+  ],
+  "asarUnpack": ["signatures/**"],
   "mac": {
     "target": "dmg"
   },
@@ -9,5 +16,7 @@
     "target": "AppImage",
     "category": "Utility"
   },
-  "win": { "target": ["portable", "msi"] }
+  "win": {
+    "target": ["portable", "msi"]
+  }
 }

@@ -113,7 +113,7 @@ export const ScanResults: React.FC<ScanResultsProps> = ({
                 No threats detected in the last scan.
               </p>
             ) : (
-              scanResults.map((threat, idx) => (
+              scanResults.map((threat) => (
                 <ThreatComponent
                   setScanResults={setScanResults}
                   scanResults={scanResults}
@@ -146,7 +146,7 @@ export const ScanResults: React.FC<ScanResultsProps> = ({
         ) : (
           quarantineRecords
             .filter((record) => record.action === "quarantine")
-            .map((record, idx) => (
+            .map((record) => (
               <Quarantine
                 key={record.quarantinedPath} // Use quarantinedPath for uniqueness
                 threatName={record.originalPath.split(/[\\/]/).pop() || ""}
