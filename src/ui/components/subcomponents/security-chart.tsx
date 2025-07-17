@@ -3,8 +3,14 @@ import { useEffect } from "react";
 
 export interface SecurityChartProps {
   theme: "light" | "dark";
+  totalFilesScanned: number;
+  numberOfThreats: number;
 }
-const SecurityChart: React.FC<SecurityChartProps> = ({ theme }) => {
+const SecurityChart: React.FC<SecurityChartProps> = ({
+  theme,
+  totalFilesScanned,
+  numberOfThreats,
+}) => {
   useEffect(() => {
     const chartDom = document.getElementById("securityChart");
     if (chartDom) {
@@ -34,8 +40,16 @@ const SecurityChart: React.FC<SecurityChartProps> = ({ theme }) => {
             },
             labelLine: { show: false },
             data: [
-              { value: 95, name: "Protected", itemStyle: { color: "#2563EB" } },
-              { value: 5, name: "At Risk", itemStyle: { color: "#DC2626" } },
+              {
+                value: totalFilesScanned - numberOfThreats,
+                name: "Protected",
+                itemStyle: { color: "#2563EB" },
+              },
+              {
+                value: numberOfThreats,
+                name: "At Risk",
+                itemStyle: { color: "#DC2626" },
+              },
             ],
           },
         ],

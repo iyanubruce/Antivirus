@@ -40,7 +40,7 @@ export const quarantineDir = isDevMode()
   : path.join(app.getPath("userData"), "quarantine");
 
 export const scanResultsDir = isDevMode()
-  ? path.join(__dirname, "../../scan-results")
+  ? path.join(__dirname, "../../../scan-results")
   : path.join(app.getPath("userData"), "scan-results");
 
 export async function appendQuarantineLog(
@@ -66,7 +66,6 @@ export async function appendQuarantineLog(
 export async function appendScanResult(record: ScanResult) {
   const logPath = path.join(scanResultsDir, "scan-results.json");
 
-  // Check if directory exists before creating
   try {
     await fs.access(scanResultsDir);
   } catch {
@@ -81,7 +80,6 @@ export async function appendScanResult(record: ScanResult) {
     logs = [];
   }
   logs.push({ ...record });
-  console.log(`Appending scan result: ${JSON.stringify(record)}`);
   try {
     await fs.writeFile(logPath, JSON.stringify(logs, null, 2));
   } catch (error: any) {

@@ -13,7 +13,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     { id: "dashboard", icon: "fa-tachometer-alt", label: "Dashboard" },
     { id: "scan-results", icon: "fa-list-alt", label: "Scan Results" },
     { id: "vulnerability", icon: "fa-bug", label: "Vulnerability Reports" },
-    { id: "settings", icon: "fa-cog", label: "Settings" },
+    // { id: "settings", icon: "fa-cog", label: "Settings" },
   ];
 
   return (

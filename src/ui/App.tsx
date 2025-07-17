@@ -15,7 +15,15 @@ const App: React.FC = () => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  const showToast = (
+    message: string,
+    type: "success" | "warning" | "error"
+  ) => {
+    setNotificationMessage(message);
+    setNotificationType(type);
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 5000);
+  };
   const {
     scanStatus,
     scanProgress,
@@ -23,8 +31,16 @@ const App: React.FC = () => {
     scanDuration,
     scanResults,
     startScan,
-  } = useScan();
-  const { vulnResults, checkVulnerabilities } = useVulnerabilities();
+    lastScanTime,
+    numberOfPreviousThreats,
+    setScanResults,
+  } = useScan(showToast);
+  const { vulnResults, checkVulnerabilities, vulnerabilitiesLoading } =
+    useVulnerabilities(showToast);
+  const highestCvssVuln = vulnResults.reduce((max, vuln) => {
+    return (vuln.cvssScore || 0) > (max.cvssScore || 0) ? vuln : max;
+  }, {} as Vulnerability);
+
   const {
     quarantineRecords,
     quarantineFile,
@@ -41,16 +57,6 @@ const App: React.FC = () => {
     useState<boolean>(false);
   const [selectedVulnerability, setSelectedVulnerability] =
     useState<Vulnerability | null>(null);
-
-  const showToast = (
-    message: string,
-    type: "success" | "warning" | "error"
-  ) => {
-    setNotificationMessage(message);
-    setNotificationType(type);
-    setShowNotification(true);
-    setTimeout(() => setShowNotification(false), 5000);
-  };
 
   const handleVulnerabilityClick = (vulnerability: Vulnerability) => {
     setSelectedVulnerability(vulnerability);
@@ -105,6 +111,14 @@ const App: React.FC = () => {
               theme={theme}
               scanStatus={scanStatus}
               scanProgress={scanProgress}
+              vulnerabilityDetails={{
+                numberOfVulnerabilities: vulnResults.length + 1,
+                threatLevel: highestCvssVuln.severity,
+                cvsScore: highestCvssVuln.cvssScore,
+              }}
+              totalFilesScanned={filesScanned}
+              numberOfThreats={numberOfPreviousThreats}
+              lastScanTime={lastScanTime}
               startScan={startScan}
               checkVulnerabilities={checkVulnerabilities}
               showToast={showToast}
@@ -112,6 +126,7 @@ const App: React.FC = () => {
           )}
           {activeTab === "vulnerability" && (
             <VulnerabilityReports
+              loading={vulnerabilitiesLoading}
               theme={theme}
               vulnerabilities={vulnResults}
               checkVulnerabilities={checkVulnerabilities}
@@ -120,6 +135,7 @@ const App: React.FC = () => {
           )}
           {activeTab === "scan-results" && (
             <ScanResults
+              setScanResults={setScanResults}
               theme={theme}
               totalFiles={filesScanned}
               scanDuration={scanDuration}
@@ -131,9 +147,9 @@ const App: React.FC = () => {
               scanResults={scanResults}
             />
           )}
-          {activeTab === "settings" && (
+          {/* {activeTab === "settings" && (
             <Settings theme={theme} selectDirectory={startScan} />
-          )}
+          )} */}
           {activeTab !== "dashboard" &&
             activeTab !== "vulnerability" &&
             activeTab !== "scan-results" &&

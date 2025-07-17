@@ -12,6 +12,7 @@ interface ScanResultsProps {
   totalFiles: number;
   scanDuration: string;
   showToast: (message: string, type: "success" | "warning" | "error") => void;
+  setScanResults: (update: Threat[]) => void;
   scanResults: Threat[];
 }
 
@@ -20,6 +21,7 @@ export const ScanResults: React.FC<ScanResultsProps> = ({
   startScan,
   scanDuration,
   showToast,
+  setScanResults,
   totalFiles,
   quarantineFile,
   quarantineRecords,
@@ -113,7 +115,9 @@ export const ScanResults: React.FC<ScanResultsProps> = ({
             ) : (
               scanResults.map((threat, idx) => (
                 <ThreatComponent
-                  key={idx}
+                  setScanResults={setScanResults}
+                  scanResults={scanResults}
+                  key={threat.filePath} // Use filePath for uniqueness
                   threatName={threat.threat}
                   theme={theme}
                   showToast={showToast}
@@ -144,7 +148,7 @@ export const ScanResults: React.FC<ScanResultsProps> = ({
             .filter((record) => record.action === "quarantine")
             .map((record, idx) => (
               <Quarantine
-                key={idx}
+                key={record.quarantinedPath} // Use quarantinedPath for uniqueness
                 threatName={record.originalPath.split(/[\\/]/).pop() || ""}
                 theme={theme}
                 showToast={showToast}

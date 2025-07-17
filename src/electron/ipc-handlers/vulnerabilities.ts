@@ -4,8 +4,14 @@ import {
   buildCPEQueries,
   fetchVulnerabilities,
 } from "../utils/system-info.js";
-import { ErrorResponse, Vulnerability } from "../types/interfaces.js";
-import { appendScanResult } from "../utils/config.js";
+import {
+  ErrorResponse,
+  ScanResult,
+  Vulnerability,
+} from "../types/interfaces.js";
+import { promises as fs } from "fs";
+import path from "path";
+import { appendScanResult, scanResultsDir } from "../utils/config.js";
 
 ipcMain.handle(
   "check-vulnerabilities",
@@ -38,7 +44,7 @@ ipcMain.handle(
       uniqueVulnerabilities.sort(
         (a, b) => (b.cvssScore || 0) - (a.cvssScore || 0)
       );
-      const lastScanTime = Date.now().toLocaleString();
+      const lastScanTime = new Date().toISOString();
       appendScanResult({
         time: lastScanTime,
         vulnerabilities: uniqueVulnerabilities,
@@ -47,6 +53,43 @@ ipcMain.handle(
       return uniqueVulnerabilities;
     } catch (error: any) {
       return { error: (error as Error).message };
+    }
+  }
+);
+
+ipcMain.handle(
+  "get-last-vulnerability-scan-details",
+  async (): Promise<
+    | { vulnerabilities: Vulnerability[]; lastScanTime: number | string }
+    | ErrorResponse
+  > => {
+    const logPath = path.join(scanResultsDir, "scan-results.json");
+    try {
+      const data = await fs.readFile(logPath, "utf-8");
+      const logs: ScanResult[] = JSON.parse(data);
+
+      // Find the latest vulnerability scan
+      const lastVulnerabilityScan = [...logs]
+        .reverse()
+        .find((log) => log.action === "vulnerabilityScan");
+
+      if (!lastVulnerabilityScan) {
+        return {
+          vulnerabilities: [],
+          lastScanTime: Date.now(),
+        };
+      }
+
+      return {
+        vulnerabilities: lastVulnerabilityScan.vulnerabilities || [],
+        lastScanTime: lastVulnerabilityScan.time || "no previous scan",
+      };
+    } catch (error: any) {
+      console.error(
+        `Failed to read vulnerability scan details: ${error.message}`,
+        error.stack
+      );
+      return { error: error.message };
     }
   }
 );

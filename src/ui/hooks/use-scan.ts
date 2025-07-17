@@ -6,7 +6,9 @@ const ipcRenderer = window.require
   ? window.require("electron").ipcRenderer
   : null;
 
-export const useScan = () => {
+export const useScan = (
+  showToast: (message: string, type: "success" | "warning" | "error") => void
+) => {
   const [scanStatus, setScanStatus] = useState<
     "protected" | "scanning" | "checking" | "completed"
   >("protected");
@@ -14,15 +16,9 @@ export const useScan = () => {
   const [filesScanned, setFilesScanned] = useState<number>(0);
   const [scanDuration, setScanDuration] = useState<string>("0s");
   const [scanResults, setScanResults] = useState<Threat[]>([]);
-
-  const showToast = (
-    message: string,
-    type: "success" | "warning" | "error"
-  ) => {
-    window.dispatchEvent(
-      new CustomEvent("showToast", { detail: { message, type } })
-    );
-  };
+  const [lastScanTime, setLastScanTime] = useState<string>("");
+  const [numberOfPreviousThreats, setNumberOfPreviousThreats] =
+    useState<number>(0);
 
   const startScan = async () => {
     setScanStatus("scanning");
@@ -46,8 +42,10 @@ export const useScan = () => {
       let duration: number = 0;
 
       if ("error" in result) {
+        console.error("Scan error:", result.error);
         results = [];
       } else {
+        setLastScanTime(new Date().toISOString());
         results = result.threats;
         totalFiles = result.totalFiles;
         duration = result.durationMs;
@@ -69,6 +67,33 @@ export const useScan = () => {
     }
   };
 
+  const fetchLastScanDetails = async () => {
+    try {
+      const result:
+        | { totalFiles: number; threats: Threat[]; lastScanTime: string }
+        | ErrorResponse = await ipcRenderer.invoke("get-last-scan-details");
+
+      if ("error" in result) {
+        showToast(
+          `Failed to fetch last scan details: ${result.error}`,
+          "error"
+        );
+      } else {
+        setFilesScanned(result.totalFiles);
+        setLastScanTime(result.lastScanTime);
+        const number = result.threats.length - 1;
+        setNumberOfPreviousThreats(number | 0);
+      }
+    } catch (error: any) {
+      console.error(
+        "Fetch last scan details error:",
+        error.message,
+        error.stack
+      );
+      showToast(`Failed to fetch last scan details: ${error.message}`, "error");
+      setLastScanTime("");
+    }
+  };
   useEffect(() => {
     const handleProgress = (_event: any, progress: ScanProgress) => {
       setScanProgress(progress.percentage);
@@ -79,13 +104,19 @@ export const useScan = () => {
       ipcRenderer?.removeListener("scan-progress", handleProgress);
     };
   }, []);
+  useEffect(() => {
+    fetchLastScanDetails();
+  }, []);
 
   return {
+    lastScanTime,
     scanStatus,
     scanProgress,
     filesScanned,
     scanDuration,
+    numberOfPreviousThreats,
     scanResults,
     startScan,
+    setScanResults,
   };
 };

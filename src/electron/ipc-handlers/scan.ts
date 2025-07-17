@@ -2,9 +2,18 @@ import { ipcMain } from "electron";
 import { promises as fs } from "fs";
 import path from "path";
 import { loadSignatures } from "../utils/signatures.js";
-import { ScanContext, appendScanResult, isDevMode } from "../utils/config.js";
-import { ErrorResponse, ScanProgress, Threat } from "../types/interfaces.js";
-import { faLadderWater } from "@fortawesome/free-solid-svg-icons";
+import {
+  ScanContext,
+  appendScanResult,
+  isDevMode,
+  scanResultsDir,
+} from "../utils/config.js";
+import {
+  ErrorResponse,
+  ScanProgress,
+  ScanResult,
+  Threat,
+} from "../types/interfaces.js";
 
 ipcMain.handle(
   "scan-directory",
@@ -84,7 +93,8 @@ ipcMain.handle(
       const start = Date.now();
       await scanDir(dir);
       const durationMs = Date.now() - start;
-      const lastScanDate = Date.now().toString();
+      const lastScanDate = new Date().toISOString();
+      console.log(lastScanDate);
       appendScanResult({
         time: lastScanDate,
         threats,
@@ -94,6 +104,49 @@ ipcMain.handle(
       return { totalFiles, threats, durationMs };
     } catch (error: any) {
       return { error: (error as Error).message };
+    }
+  }
+);
+
+ipcMain.handle(
+  "get-last-scan-details",
+  async (): Promise<
+    | { totalFiles: number; threats: Threat[]; lastScanTime: string }
+    | ErrorResponse
+  > => {
+    const logPath = path.join(scanResultsDir, "scan-results.json");
+    try {
+      const data = await fs.readFile(logPath, "utf-8");
+      const logs: ScanResult[] = await JSON.parse(data);
+
+      const lastThreatScan = [...logs]
+        .reverse()
+        .find((log) => log.action === "threatScan");
+
+      if (
+        !lastThreatScan ||
+        !lastThreatScan.action ||
+        !lastThreatScan.time ||
+        !lastThreatScan.filesScanned
+      ) {
+        return {
+          totalFiles: 0,
+          threats: [],
+          lastScanTime: "No scans yet",
+        };
+      }
+
+      return {
+        totalFiles: lastThreatScan.filesScanned || 0,
+        threats: lastThreatScan.threats || [],
+        lastScanTime: lastThreatScan.time,
+      };
+    } catch (error: any) {
+      console.error(
+        `Failed to read scan details: ${error.message}`,
+        error.stack
+      );
+      return { error: error.message };
     }
   }
 );

@@ -1,12 +1,20 @@
 import ProgressCircle from "../subcomponents/progress-circle";
 import SecurityChart from "../subcomponents/security-chart";
-
+import { formatRelativeTime } from "../../utils/format";
 interface DashboardProps {
   theme: "light" | "dark";
   scanStatus: "protected" | "scanning" | "checking" | "completed";
   scanProgress: number;
   startScan: () => Promise<void>;
   checkVulnerabilities: () => Promise<void>;
+  totalFilesScanned: number;
+  vulnerabilityDetails: {
+    numberOfVulnerabilities: number;
+    threatLevel: string | undefined;
+    cvsScore: number | undefined;
+  };
+  lastScanTime: string;
+  numberOfThreats: number;
   showToast: (message: string, type: "success" | "warning" | "error") => void;
 }
 
@@ -14,6 +22,10 @@ const Dashboard: React.FC<DashboardProps> = ({
   theme,
   scanStatus,
   scanProgress,
+  totalFilesScanned,
+  numberOfThreats,
+  lastScanTime,
+  vulnerabilityDetails,
   startScan,
   checkVulnerabilities,
   showToast,
@@ -158,10 +170,12 @@ const Dashboard: React.FC<DashboardProps> = ({
                   >
                     Last Scan
                   </span>
-                  <span className="font-medium">Today, 10:45 AM</span>
+                  <span className="font-medium">
+                    {formatRelativeTime(lastScanTime)}
+                  </span>
                 </div>
               </div>
-              <div
+              {/* <div
                 className={`p-4 rounded-lg ${
                   theme === "light" ? "bg-gray-50" : "bg-gray-700"
                 }`}
@@ -174,9 +188,9 @@ const Dashboard: React.FC<DashboardProps> = ({
                   >
                     Threats Blocked
                   </span>
-                  <span className="font-medium">24</span>
+                  <span className="font-medium">{}</span>
                 </div>
-              </div>
+              </div> */}
               <div
                 className={`p-4 rounded-lg ${
                   theme === "light" ? "bg-gray-50" : "bg-gray-700"
@@ -191,15 +205,46 @@ const Dashboard: React.FC<DashboardProps> = ({
                     Vulnerabilities
                   </span>
                   <span className="font-medium">
-                    2{" "}
-                    <span className="text-yellow-500 text-sm">(Low Risk)</span>
+                    {vulnerabilityDetails.numberOfVulnerabilities === 0 &&
+                    vulnerabilityDetails.cvsScore! > 0
+                      ? 0
+                      : vulnerabilityDetails.numberOfVulnerabilities}{" "}
+                    <span
+                      className={`text-sm ${
+                        vulnerabilityDetails?.cvsScore! >= 9
+                          ? "text-red-600"
+                          : vulnerabilityDetails?.cvsScore! >= 7
+                          ? "text-orange-500"
+                          : vulnerabilityDetails?.cvsScore! >= 4
+                          ? "text-yellow-500"
+                          : vulnerabilityDetails?.cvsScore! > 0
+                          ? "text-green-500"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      (
+                      {vulnerabilityDetails?.cvsScore! >= 9
+                        ? "Critical Risk"
+                        : vulnerabilityDetails?.cvsScore! >= 7
+                        ? "High Risk"
+                        : vulnerabilityDetails?.cvsScore! >= 4
+                        ? "Medium Risk"
+                        : vulnerabilityDetails?.cvsScore! > 0
+                        ? "Low Risk"
+                        : "No Risk"}
+                      )
+                    </span>
                   </span>
                 </div>
               </div>
             </div>
           </div>
           <div className="col-span-2">
-            <SecurityChart theme={theme} />
+            <SecurityChart
+              totalFilesScanned={totalFilesScanned}
+              numberOfThreats={numberOfThreats}
+              theme={theme}
+            />
           </div>
         </div>
       </div>

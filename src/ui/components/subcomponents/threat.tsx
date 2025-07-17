@@ -1,15 +1,22 @@
 import React, { useState } from "react";
+import { Threat } from "../../types/interfaces";
+
 export interface ThreatProps {
+  scanResults: Threat[];
   theme: "light" | "dark";
   threatName: string;
   quarantineFile: (filePath: string) => Promise<void>;
   filePath: string;
+  setScanResults: (update: Threat[]) => void;
   showToast: (message: string, type: "success" | "warning" | "error") => void;
 }
+
 export const ThreatComponent: React.FC<ThreatProps> = ({
+  scanResults,
   theme,
   showToast,
   threatName,
+  setScanResults,
   quarantineFile,
   filePath,
 }) => {
@@ -21,13 +28,16 @@ export const ThreatComponent: React.FC<ThreatProps> = ({
 
   const handleConfirmQuarantine = async () => {
     try {
-      console.log("Quarantining file:", filePath); // Debug log
       await quarantineFile(filePath);
+      const updatedResults = scanResults.filter(
+        (threat) => threat.filePath !== filePath
+      );
+      setScanResults(updatedResults);
       setIsModalOpen(false);
       showToast(`File ${threatName} quarantined successfully`, "success");
     } catch (error: any) {
+      console.error("Quarantine error:", error.message, error.stack);
       showToast(`Failed to quarantine file: ${error.message}`, "error");
-      console.error("Quarantine error:", error);
     }
   };
 
@@ -57,6 +67,7 @@ export const ThreatComponent: React.FC<ThreatProps> = ({
         <button
           onClick={handleOpenModal}
           className="text-red-600 hover:text-red-700 font-medium !rounded-button whitespace-nowrap"
+          disabled={isModalOpen} // Prevent multiple clicks
         >
           <i className="fas fa-shield-alt mr-2"></i>Quarantine
         </button>
@@ -104,6 +115,7 @@ export const ThreatComponent: React.FC<ThreatProps> = ({
               <button
                 onClick={handleConfirmQuarantine}
                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md !rounded-button whitespace-nowrap"
+                disabled={isModalOpen && !quarantineFile} // Disable if already processing
               >
                 Confirm Quarantine
               </button>

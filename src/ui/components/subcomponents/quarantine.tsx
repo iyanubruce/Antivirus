@@ -25,6 +25,7 @@ const Quarantine: React.FC<QuarantineProps> = ({
     try {
       await unQuarantineFile(filePath);
       setIsModalOpen(false);
+      showToast(`File ${threatName} un-quarantined successfully`, "success");
     } catch (error: any) {
       showToast(`Failed to unquarantine file: ${error.message}`, "error");
     }

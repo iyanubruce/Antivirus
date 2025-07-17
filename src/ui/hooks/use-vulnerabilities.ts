@@ -1,46 +1,81 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Vulnerability, ErrorResponse } from "../types/interfaces";
 
 const ipcRenderer = window.require
   ? window.require("electron").ipcRenderer
   : null;
 
-export const useVulnerabilities = () => {
+export const useVulnerabilities = (
+  showToast: (message: string, type: "success" | "warning" | "error") => void
+) => {
   const [vulnResults, setVulnResults] = useState<Vulnerability[]>([]);
-
-  const showToast = (
-    message: string,
-    type: "success" | "warning" | "error"
-  ) => {
-    window.dispatchEvent(
-      new CustomEvent("showToast", { detail: { message, type } })
-    );
-  };
-
+  const [lastScanTime, setLastScanTime] = useState<string>("");
+  const [vulnerabilitiesLoading, setVulnerabilitiesLoading] =
+    useState<boolean>(false);
   const checkVulnerabilities = async () => {
     try {
-      const results: Vulnerability[] | ErrorResponse = await ipcRenderer.invoke(
+      setVulnerabilitiesLoading(true);
+      const result: Vulnerability[] | ErrorResponse = await ipcRenderer.invoke(
         "check-vulnerabilities"
       );
-      if ("error" in results) {
-        showToast(`Vulnerability check failed: ${results.error}`, "error");
+      if ("error" in result) {
+        showToast(`Vulnerability check failed: ${result.error}`, "error");
+        setVulnerabilitiesLoading(false);
         setVulnResults([]);
       } else {
-        setVulnResults(results);
-        showToast(
-          results.length
-            ? `${results.length} vulnerability${
-                results.length > 1 ? "ies" : "y"
-              } found`
-            : "Vulnerability check complete. No vulnerabilities found.",
-          results.length ? "warning" : "success"
-        );
+        setVulnResults(result);
+        setLastScanTime(new Date().toLocaleString());
+        setVulnerabilitiesLoading(false);
+        showToast("Vulnerability check completed", "success");
       }
     } catch (error: any) {
-      showToast(`Vulnerability check error: ${error.message}`, "error");
+      setVulnerabilitiesLoading(false);
+      console.error("Vulnerability check error:", error.message, error.stack);
+      showToast(`Vulnerability check failed: ${error.message}`, "error");
       setVulnResults([]);
     }
   };
 
-  return { vulnResults, checkVulnerabilities };
+  const fetchLastVulnerabilityScan = async () => {
+    try {
+      const result:
+        | { vulnerabilities: Vulnerability[]; lastScanTime: string }
+        | ErrorResponse = await ipcRenderer.invoke(
+        "get-last-vulnerability-scan-details"
+      );
+      if ("error" in result) {
+        console.error("Fetch last vulnerability scan error:", result.error);
+        showToast(
+          `Failed to fetch last scan details: ${result.error}`,
+          "error"
+        );
+        setVulnResults([]);
+        setLastScanTime("");
+      } else {
+        setVulnResults(result.vulnerabilities);
+        setLastScanTime(result.lastScanTime);
+      }
+    } catch (error: any) {
+      console.error(
+        "Fetch last vulnerability scan error:",
+        error.message,
+        error.stack
+      );
+      showToast(`Failed to fetch last scan details: ${error.message}`, "error");
+      setVulnResults([]);
+      setLastScanTime("");
+    }
+  };
+
+  useEffect(() => {
+    fetchLastVulnerabilityScan();
+  }, []);
+
+  return {
+    vulnResults,
+    lastScanTime,
+    checkVulnerabilities,
+    fetchLastVulnerabilityScan,
+    vulnerabilitiesLoading,
+  };
 };
