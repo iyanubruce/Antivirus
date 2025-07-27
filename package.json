@@ -2,6 +2,7 @@
   "name": "antivirus",
   "private": true,
   "version": "0.0.0",
+  "productName": "Antivirus",
   "type": "module",
   "main": "dist-electron/main.js",
   "scripts": {
