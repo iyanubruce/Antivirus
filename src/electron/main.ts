@@ -15,10 +15,10 @@ import "./ipc-handlers/vulnerabilities.js";
 
 async function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
+    width: 1400,
     height: 600,
-    minWidth: 600, // Set minimum width
-    minHeight: 400, // Set minimum height
+    minWidth: 1400, // Set minimum width
+    minHeight: 600, // Set minimum height
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

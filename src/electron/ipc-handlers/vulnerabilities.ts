@@ -13,15 +13,26 @@ import { promises as fs } from "fs";
 import path from "path";
 import { appendScanResult, scanResultsDir } from "../utils/config.js";
 
+const ensureScanResultsDir = async () => {
+  try {
+    await fs.access(scanResultsDir);
+  } catch {
+    await fs.mkdir(scanResultsDir, { recursive: true });
+  }
+};
+
 ipcMain.handle(
   "check-vulnerabilities",
   async (): Promise<Vulnerability[] | ErrorResponse> => {
     try {
+      // Ensure scan results directory exists before scanning
+      await ensureScanResultsDir();
+
       const systemInfo = await getSystemInfo();
       const queries = buildCPEQueries(systemInfo);
       const apiKey = process.env.NVD_API_KEY || undefined;
       const allVulnerabilities: Vulnerability[] = [];
-
+      
       for (const query of queries) {
         const vulnerabilities = await fetchVulnerabilities(query, apiKey);
         vulnerabilities.forEach((vuln) => {
@@ -36,20 +47,21 @@ ipcMain.handle(
         allVulnerabilities.push(...vulnerabilities);
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
-
+      
       const uniqueVulnerabilities = allVulnerabilities.filter(
         (vuln, index, self) => index === self.findIndex((v) => v.id === vuln.id)
       );
-
       uniqueVulnerabilities.sort(
         (a, b) => (b.cvssScore || 0) - (a.cvssScore || 0)
       );
+      
       const lastScanTime = new Date().toISOString();
       appendScanResult({
         time: lastScanTime,
         vulnerabilities: uniqueVulnerabilities,
         action: "vulnerabilityScan",
       });
+      
       return uniqueVulnerabilities;
     } catch (error: any) {
       return { error: (error as Error).message };
@@ -63,26 +75,41 @@ ipcMain.handle(
     | { vulnerabilities: Vulnerability[]; lastScanTime: number | string }
     | ErrorResponse
   > => {
-    const logPath = path.join(scanResultsDir, "scan-results.json");
     try {
+      // Ensure directory exists and await the operation
+      await ensureScanResultsDir();
+      
+      const logPath = path.join(scanResultsDir, "scan-results.json");
+      
+      // Check if the file exists before trying to read it
+      try {
+        await fs.access(logPath);
+      } catch {
+        // File doesn't exist, return default values
+        return {
+          vulnerabilities: [],
+          lastScanTime: "No vulnerability scans yet",
+        };
+      }
+
       const data = await fs.readFile(logPath, "utf-8");
       const logs: ScanResult[] = JSON.parse(data);
-
+      
       // Find the latest vulnerability scan
       const lastVulnerabilityScan = [...logs]
         .reverse()
         .find((log) => log.action === "vulnerabilityScan");
-
+      
       if (!lastVulnerabilityScan) {
         return {
           vulnerabilities: [],
-          lastScanTime: Date.now(),
+          lastScanTime: "No vulnerability scans yet",
         };
       }
-
+      
       return {
         vulnerabilities: lastVulnerabilityScan.vulnerabilities || [],
-        lastScanTime: lastVulnerabilityScan.time || "no previous scan",
+        lastScanTime: lastVulnerabilityScan.time || "No previous scan",
       };
     } catch (error: any) {
       console.error(

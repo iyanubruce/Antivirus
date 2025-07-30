@@ -10,7 +10,18 @@ export function msToSecondsString(ms: number): string {
 }
 
 export function formatRelativeTime(timestamp: string): string {
+  // Handle special non-date strings first
+  if (timestamp === "No scans yet") {
+    return "No scans yet";
+  }
+
   const date = new Date(timestamp);
+
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return "Invalid date";
+  }
+
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const yesterday = new Date(today);
@@ -37,9 +48,7 @@ export function formatRelativeTime(timestamp: string): string {
   if (isToday) {
     return `Today at ${timeStr}`;
   } else if (isYesterday) {
-    return `yesterday at ${timeStr}`;
-  } else if (timestamp === "No scans yet") {
-    return "No scans yet";
+    return `Yesterday at ${timeStr}`; // Fixed: capital 'Y'
   } else {
     return `${dateFormatter.format(date)} at ${timeStr}`;
   }

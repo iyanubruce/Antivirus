@@ -91,7 +91,9 @@ export const useScan = (
         error.stack
       );
       showToast(`Failed to fetch last scan details: ${error.message}`, "error");
-      setLastScanTime("");
+      setLastScanTime(""); setFilesScanned(0);
+      setLastScanTime('No scans yet');
+      setNumberOfPreviousThreats(0);
     }
   };
   useEffect(() => {

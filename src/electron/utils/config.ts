@@ -1,7 +1,7 @@
 import { app } from "electron";
 import path from "path";
 import { promises as fs } from "fs";
-import { fileURLToPath } from "url";
+// import { fileURLToPath } from "url";
 import {
   QuarantineRecord,
   ScanResult,
@@ -29,20 +29,19 @@ import {
   WindowsUnquarantineStrategy,
 } from "../strategies/unquarantine.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export function isDevMode(): boolean {
   return process.env.NODE_ENV === "development";
 }
-
 export const quarantineDir = isDevMode()
-  ? path.join(__dirname, "../../quarantine")
+  ? path.join(app.getAppPath(), "quarantine") // instead of relative paths
   : path.join(app.getPath("userData"), "quarantine");
 
 export const scanResultsDir = isDevMode()
-  ? path.join(__dirname, "../../../scan-results")
+  ? path.join(app.getAppPath(), "scan-results")
   : path.join(app.getPath("userData"), "scan-results");
-
+  
 export async function appendQuarantineLog(
   record: QuarantineRecord,
   action: "quarantine" | "unquarantine" = "quarantine"

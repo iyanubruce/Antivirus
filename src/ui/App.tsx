@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Header, Sidebar, Dashboard } from "./components/layout";
+import { Header, Sidebar, Dashboard } from "./components/layout/";
 import {
   ScanResults,
   VulnerabilityReports,
   // Settings,
   VulnerabilityModal,
   ToastNotification,
-} from "./components/core";
-import { useScan, useVulnerabilities, useQuarantine } from "./hooks";
+} from "./components/core/";
+import { useScan, useVulnerabilities, useQuarantine } from "./hooks/";
 import { Vulnerability } from "./types/interfaces";
 import "./App.css";
 

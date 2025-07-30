@@ -25,10 +25,25 @@ const Dashboard: React.FC<DashboardProps> = ({
   totalFilesScanned,
   numberOfThreats,
   lastScanTime,
-  vulnerabilityDetails,
+  vulnerabilityDetails, 
   startScan,
   checkVulnerabilities,
 }) => {
+  // Safe access to vulnerability details with fallbacks
+  const vulnCount = vulnerabilityDetails?.numberOfVulnerabilities ?? 0;
+  const cvsScore = vulnerabilityDetails?.cvsScore ?? 0;
+  
+  // Function to get risk level and color
+  const getRiskInfo = (score: number) => {
+    if (score >= 9) return { level: "Critical Risk", color: "text-red-600" };
+    if (score >= 7) return { level: "High Risk", color: "text-orange-500" };
+    if (score >= 4) return { level: "Medium Risk", color: "text-yellow-500" };
+    if (score > 0) return { level: "Low Risk", color: "text-green-500" };
+    return { level: "No Risk", color: "text-gray-400" };
+  };
+
+  const riskInfo = getRiskInfo(cvsScore);
+
   return (
     <div>
       <div className="mb-6">
@@ -39,6 +54,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           Monitor and manage your system's security status
         </p>
       </div>
+      
       <div
         className={`mb-8 p-6 rounded-lg ${
           theme === "light" ? "bg-white shadow-sm" : "bg-gray-800 shadow-md"
@@ -85,6 +101,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           </div>
         </div>
       </div>
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div
           className={`p-6 rounded-lg cursor-pointer transition-transform hover:scale-[1.02] ${
@@ -115,6 +132,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             </button>
           </div>
         </div>
+        
         <div
           className={`p-6 rounded-lg cursor-pointer transition-transform hover:scale-[1.02] ${
             theme === "light"
@@ -147,6 +165,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           </div>
         </div>
       </div>
+      
       <div
         className={`rounded-lg ${
           theme === "light" ? "bg-white shadow-sm" : "bg-gray-800 shadow-md"
@@ -174,22 +193,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   </span>
                 </div>
               </div>
-              {/* <div
-                className={`p-4 rounded-lg ${
-                  theme === "light" ? "bg-gray-50" : "bg-gray-700"
-                }`}
-              >
-                <div className="flex justify-between items-center">
-                  <span
-                    className={`${
-                      theme === "light" ? "text-gray-600" : "text-gray-300"
-                    }`}
-                  >
-                    Threats Blocked
-                  </span>
-                  <span className="font-medium">{}</span>
-                </div>
-              </div> */}
+              
               <div
                 className={`p-4 rounded-lg ${
                   theme === "light" ? "bg-gray-50" : "bg-gray-700"
@@ -204,40 +208,16 @@ const Dashboard: React.FC<DashboardProps> = ({
                     Vulnerabilities
                   </span>
                   <span className="font-medium">
-                    {vulnerabilityDetails.numberOfVulnerabilities === 0 &&
-                    vulnerabilityDetails.cvsScore! > 0
-                      ? 0
-                      : vulnerabilityDetails.numberOfVulnerabilities}{" "}
-                    <span
-                      className={`text-sm ${
-                        vulnerabilityDetails?.cvsScore! >= 9
-                          ? "text-red-600"
-                          : vulnerabilityDetails?.cvsScore! >= 7
-                          ? "text-orange-500"
-                          : vulnerabilityDetails?.cvsScore! >= 4
-                          ? "text-yellow-500"
-                          : vulnerabilityDetails?.cvsScore! > 0
-                          ? "text-green-500"
-                          : "text-gray-400"
-                      }`}
-                    >
-                      (
-                      {vulnerabilityDetails?.cvsScore! >= 9
-                        ? "Critical Risk"
-                        : vulnerabilityDetails?.cvsScore! >= 7
-                        ? "High Risk"
-                        : vulnerabilityDetails?.cvsScore! >= 4
-                        ? "Medium Risk"
-                        : vulnerabilityDetails?.cvsScore! > 0
-                        ? "Low Risk"
-                        : "No Risk"}
-                      )
+                    {vulnCount}{" "}
+                    <span className={`text-sm ${riskInfo.color}`}>
+                      ({riskInfo.level})
                     </span>
                   </span>
                 </div>
               </div>
             </div>
           </div>
+          
           <div className="col-span-2">
             <SecurityChart
               totalFilesScanned={totalFilesScanned}

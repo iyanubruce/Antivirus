@@ -15,6 +15,14 @@ import {
   Threat,
 } from "../types/interfaces.js";
 
+const ensureScanResultsDir = async () => {
+  try {
+    await fs.access(scanResultsDir);
+  } catch {
+    await fs.mkdir(scanResultsDir, { recursive: true });
+  }
+};
+
 ipcMain.handle(
   "scan-directory",
   async (
@@ -34,6 +42,9 @@ ipcMain.handle(
       } catch {
         return { error: `Directory does not exist: ${dir}` };
       }
+
+      // Ensure scan results directory exists before scanning
+      await ensureScanResultsDir();
 
       const signatures = await loadSignatures();
       const scanContext = new ScanContext(process.platform, signatures);
@@ -95,12 +106,14 @@ ipcMain.handle(
       const durationMs = Date.now() - start;
       const lastScanDate = new Date().toISOString();
       console.log(lastScanDate);
+      
       appendScanResult({
         time: lastScanDate,
         threats,
         filesScanned: scannedFiles,
         action: "threatScan",
       });
+      
       return { totalFiles, threats, durationMs };
     } catch (error: any) {
       return { error: (error as Error).message };
@@ -114,10 +127,26 @@ ipcMain.handle(
     | { totalFiles: number; threats: Threat[]; lastScanTime: string }
     | ErrorResponse
   > => {
-    const logPath = path.join(scanResultsDir, "scan-results.json");
     try {
+      // Ensure directory exists and await the operation
+      await ensureScanResultsDir();
+      
+      const logPath = path.join(scanResultsDir, "scan-results.json");
+      
+      // Check if the file exists before trying to read it
+      try {
+        await fs.access(logPath);
+      } catch {
+        // File doesn't exist, return default values
+        return {
+          totalFiles: 0,
+          threats: [],
+          lastScanTime: "No scans yet",
+        };
+      }
+
       const data = await fs.readFile(logPath, "utf-8");
-      const logs: ScanResult[] = await JSON.parse(data);
+      const logs: ScanResult[] = JSON.parse(data);
 
       const lastThreatScan = [...logs]
         .reverse()
