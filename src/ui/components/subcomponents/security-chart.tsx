@@ -1,27 +1,43 @@
 import * as echarts from "echarts";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export interface SecurityChartProps {
   theme: "light" | "dark";
   totalFilesScanned: number;
   numberOfThreats: number;
 }
+
 const SecurityChart: React.FC<SecurityChartProps> = ({
   theme,
   totalFilesScanned,
   numberOfThreats,
 }) => {
+  const chartRef = useRef<HTMLDivElement>(null);
+  const chartInstanceRef = useRef<echarts.ECharts | null>(null);
+
   useEffect(() => {
-    const chartDom = document.getElementById("securityChart");
-    if (chartDom) {
-      const myChart = echarts.init(chartDom);
+    // Cleanup function for the chart
+    const initChart = () => {
+      if (!chartRef.current) return;
+
+      // Dispose of previous instance if exists
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.dispose();
+      }
+
+      // Initialize new chart
+      chartInstanceRef.current = echarts.init(chartRef.current);
+
+      // Set options with current data
       const option = {
         animation: false,
         tooltip: { trigger: "item" },
         legend: {
           top: "5%",
           left: "center",
-          textStyle: { color: theme === "light" ? "#111827" : "#F9FAFB" },
+          textStyle: {
+            color: theme === "light" ? "#111827" : "#F9FAFB",
+          },
         },
         series: [
           {
@@ -41,7 +57,7 @@ const SecurityChart: React.FC<SecurityChartProps> = ({
             labelLine: { show: false },
             data: [
               {
-                value: totalFilesScanned - numberOfThreats,
+                value: totalFilesScanned,
                 name: "Protected",
                 itemStyle: { color: "#2563EB" },
               },
@@ -54,18 +70,33 @@ const SecurityChart: React.FC<SecurityChartProps> = ({
           },
         ],
       };
-      myChart.setOption(option);
-      window.addEventListener("resize", () => myChart.resize());
-      return () => {
-        myChart.dispose();
-        window.removeEventListener("resize", () => myChart.resize());
-      };
-    }
-  }, [theme]);
 
-  return (
-    <div id="securityChart" style={{ width: "100%", height: "300px" }}></div>
-  );
+      chartInstanceRef.current.setOption(option);
+    };
+
+    // Initialize chart
+    initChart();
+
+    // Handle window resize
+    const resizeHandler = () => {
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.resize();
+      }
+    };
+
+    window.addEventListener("resize", resizeHandler);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.dispose();
+        chartInstanceRef.current = null;
+      }
+    };
+  }, [theme, totalFilesScanned, numberOfThreats]); // 👈 KEY FIX: Added all dependencies
+
+  return <div ref={chartRef} style={{ width: "100%", height: "300px" }}></div>;
 };
 
 export default SecurityChart;
