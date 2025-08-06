@@ -30,16 +30,6 @@ const Dashboard: React.FC<DashboardProps> = ({
   checkVulnerabilities,
 }) => {
   // Safe access to vulnerability details with fallbacks
-  const cvsScore = vulnerabilityDetails?.cvsScore ?? 0;
-
-  // Function to get risk level and color
-  const getRiskInfo = (score: number) => {
-    if (score >= 9) return { level: "Critical Risk", color: "text-red-600" };
-    if (score >= 7) return { level: "High Risk", color: "text-orange-500" };
-    if (score >= 4) return { level: "Medium Risk", color: "text-yellow-500" };
-    if (score > 0) return { level: "Low Risk", color: "text-green-500" };
-    return { level: "No Risk", color: "text-gray-400" };
-  };
 
   return (
     <div>
