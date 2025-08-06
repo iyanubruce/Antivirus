@@ -11,7 +11,39 @@ import { useScan, useVulnerabilities, useQuarantine } from "./hooks/";
 import { Vulnerability } from "./types/interfaces";
 import "./App.css";
 
+// Extend the Window interface to include electronAPI
+declare global {
+  interface Window {
+    electronAPI?: {
+      onSecurityAlert: (
+        callback: (
+          event: Electron.IpcRendererEvent,
+          data: SecurityAlert
+        ) => void
+      ) => void;
+      // Add other electronAPI methods if needed
+    };
+  }
+}
+
+interface SecurityAlert {
+  type: string;
+  message: string;
+  connection: string;
+}
 const App: React.FC = () => {
+  const [alert, setAlert] = useState<SecurityAlert | null>(null); // Use the defined type for the alert state
+
+  useEffect(() => {
+    if (window.electronAPI) {
+      // Listen for the 'security-alert' event from the main process
+      window.electronAPI.onSecurityAlert(
+        (_event: Electron.IpcRendererEvent, data: SecurityAlert) => {
+          setAlert(data);
+        }
+      );
+    }
+  }, []);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -108,6 +140,7 @@ const App: React.FC = () => {
         <main className="flex-1 overflow-auto p-6">
           {activeTab === "dashboard" && (
             <Dashboard
+              alert={alert}
               theme={theme}
               scanStatus={scanStatus}
               scanProgress={scanProgress}

@@ -10,8 +10,49 @@ import "./ipc-handlers/directory.js";
 import "./ipc-handlers/scan.js";
 import "./ipc-handlers/quarantine.js";
 import "./ipc-handlers/vulnerabilities.js";
+import { exec, ExecException } from "child_process";
 
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
+let mainWindow: BrowserWindow | null = null;
+
+function isSuspiciousConnection(line: string): boolean {
+  const knownGoodPorts = [80, 443, 53];
+  const maliciousDomains = ["malicious.com", "192.168.1.100"]; // Expand with threat intel later
+
+  // Extract PID, IP, port (parsing logic depends on OS)
+  if (line.includes(":4444") || line.includes("198.51.100.")) {
+    return true;
+  }
+  return false;
+}
+function getActiveConnections() {
+  if (!mainWindow) return;
+
+  const command =
+    process.platform === "win32"
+      ? "netstat -ano"
+      : "lsof -i -P -n | grep ESTABLISHED";
+
+  interface ExecCallback {
+    (error: ExecException | null, stdout: string, stderr: string): void;
+  }
+
+  exec(
+    command,
+    (error: ExecException | null, stdout: string, stderr: string) => {
+      if (error || stderr) return;
+
+      stdout.split("\n").forEach((line: string) => {
+        if (isSuspiciousConnection(line)) {
+          mainWindow?.webContents.send(
+            "security-alert",
+            `Suspicious connection: ${line.trim()}`
+          );
+        }
+      });
+    }
+  );
+}
 
 async function createWindow() {
   const win = new BrowserWindow({

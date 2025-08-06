@@ -1,7 +1,13 @@
 import ProgressCircle from "../subcomponents/progress-circle";
 import SecurityChart from "../subcomponents/security-chart";
 import { formatRelativeTime } from "../../utils/format";
+interface SecurityAlert {
+  type: string;
+  message: string;
+  connection: string;
+}
 interface DashboardProps {
+  alert: SecurityAlert | null;
   theme: "light" | "dark";
   scanStatus: "protected" | "scanning" | "checking" | "completed";
   scanProgress: number;
@@ -19,6 +25,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({
+  alert,
   theme,
   scanStatus,
   scanProgress,
@@ -238,6 +245,26 @@ const Dashboard: React.FC<DashboardProps> = ({
             />
           </div>
         </div>
+      </div>
+      <div
+        style={{
+          marginTop: "30px",
+          padding: "15px",
+          backgroundColor: "#f9f9f9",
+          borderLeft: "5px solid #ccc",
+        }}
+      >
+        {alert ? (
+          <>
+            <h4 style={{ color: "red" }}>Security Alert: {alert.type}</h4>
+            <p>{alert.message}</p>
+            <pre style={{ background: "#f0f0f0", padding: "10px" }}>
+              {JSON.stringify(alert.connection, null, 2)}
+            </pre>
+          </>
+        ) : (
+          <p style={{ color: "#555" }}>✅ No security alerts at this time.</p>
+        )}
       </div>
     </div>
   );
