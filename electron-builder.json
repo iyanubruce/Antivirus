@@ -19,6 +19,6 @@
     "category": "Utility"
   },
   "win": {
-    "target": ["dir", "portable","msi"]
+    "target": ["dir", "portable", "msi", "zip"]
   }
 }
