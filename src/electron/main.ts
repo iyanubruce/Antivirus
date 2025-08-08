@@ -58,7 +58,7 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 1400,
     height: 600,
-    minWidth: 1400, // Set minimum width
+    minWidth: 1100, // Set minimum width
     minHeight: 600, // Set minimum height
     webPreferences: {
       nodeIntegration: true,
