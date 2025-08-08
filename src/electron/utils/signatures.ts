@@ -1,7 +1,9 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { Signature } from "../types/interfaces";
-import { app } from "electron";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let signaturesCache: Signature[] | null = null;
 
@@ -10,7 +12,7 @@ export async function loadSignatures(): Promise<Signature[]> {
     return signaturesCache;
   }
   const signaturesPath = path.join(
-    app.getAppPath(),
+    __dirname,
     "../../signatures/signatures.json"
   );
   try {

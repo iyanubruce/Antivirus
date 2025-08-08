@@ -33,13 +33,23 @@ ipcMain.handle(
     | ErrorResponse
   > => {
     try {
+      console.log("SCAN-DIRECTORY: Starting scan process");
+      console.log("SCAN-DIRECTORY: Directory to scan:", dir);
+      console.log("SCAN-DIRECTORY: Dev mode:", isDevMode());
+      console.log(
+        "SCAN-DIRECTORY: Scan results will be saved to:",
+        scanResultsDir
+      );
+
       if (!dir || typeof dir !== "string") {
+        console.error("SCAN-DIRECTORY: Invalid or missing directory path");
         return { error: "Invalid or missing directory path" };
       }
 
       try {
         await fs.access(dir);
-      } catch {
+      } catch (err) {
+        console.error(`SCAN-DIRECTORY: Directory does not exist: ${dir}`, err);
         return { error: `Directory does not exist: ${dir}` };
       }
 
@@ -53,51 +63,89 @@ ipcMain.handle(
       // Count total files for progress
       let totalFiles = 0;
       const countFiles = async (currentDir: string) => {
-        const entries = await fs.readdir(currentDir, { withFileTypes: true });
-        for (const entry of entries) {
-          const fullPath = path.join(currentDir, entry.name);
-          if (entry.isDirectory()) {
-            await countFiles(fullPath);
-          } else if (isDevMode() && !fullPath.endsWith(".txt")) {
-            continue; // Limit to .txt in development
-          } else {
-            totalFiles++;
+        try {
+          const entries = await fs.readdir(currentDir, { withFileTypes: true });
+          for (const entry of entries) {
+            const fullPath = path.join(currentDir, entry.name);
+            if (entry.isDirectory()) {
+              await countFiles(fullPath);
+            } else if (isDevMode() && !fullPath.endsWith(".txt")) {
+              continue; // Limit to .txt in development
+            } else {
+              totalFiles++;
+            }
           }
+        } catch (err) {
+          console.warn(
+            `SCAN-DIRECTORY: Failed to count files in ${currentDir}:`,
+            err
+          );
         }
       };
       await countFiles(dir);
 
+      console.log(`SCAN-DIRECTORY: Total files to scan: ${totalFiles}`);
+
       // Scan files
       let scannedFiles = 0;
       const scanDir = async (currentDir: string) => {
-        const entries = await fs.readdir(currentDir, { withFileTypes: true });
-        for (const entry of entries) {
-          const fullPath = path.join(currentDir, entry.name);
-          if (entry.isDirectory()) {
-            await scanDir(fullPath);
-          } else if (isDevMode() && !fullPath.endsWith(".txt")) {
-            continue; // Skip non-.txt files in development
-          } else {
-            try {
-              const content = await fs.readFile(fullPath);
-              const threat = scanContext.scan(fullPath, content);
-              if (threat) {
-                threats.push(threat);
+        try {
+          const entries = await fs.readdir(currentDir, { withFileTypes: true });
+          for (const entry of entries) {
+            const fullPath = path.join(currentDir, entry.name);
+            if (entry.isDirectory()) {
+              await scanDir(fullPath);
+            } else if (isDevMode() && !fullPath.endsWith(".txt")) {
+              continue; // Skip non-.txt files in development
+            } else {
+              try {
+                const content = await fs.readFile(fullPath);
+                const threat = scanContext.scan(fullPath, content);
+                if (threat) {
+                  threats.push(threat);
+                }
+                scannedFiles++;
+
+                // CRITICAL FIX: Wrap send in try/catch to prevent scan crashes
+                try {
+                  const percentage =
+                    totalFiles > 0
+                      ? Math.min(
+                          100,
+                          Math.round((scannedFiles / totalFiles) * 100)
+                        )
+                      : 0;
+                  event.sender.send("scan-progress", {
+                    percentage,
+                    scannedFiles,
+                    totalFiles,
+                  } as ScanProgress);
+                  console.log(
+                    `SCAN-DIRECTORY: Progress ${percentage}% (${scannedFiles}/${totalFiles})`
+                  );
+                } catch (sendError) {
+                  console.warn(
+                    "SCAN-DIRECTORY: Failed to send progress (renderer not ready):",
+                    sendError &&
+                      typeof sendError === "object" &&
+                      "message" in sendError
+                      ? (sendError as any).message
+                      : String(sendError)
+                  );
+                  // Continue scanning - DO NOT return or throw here!
+                }
+              } catch (error: any) {
+                console.warn(
+                  `SCAN-DIRECTORY: Failed to scan ${fullPath}: ${error.message}`
+                );
               }
-              scannedFiles++;
-              const percentage =
-                totalFiles > 0
-                  ? Math.min(100, Math.round((scannedFiles / totalFiles) * 100))
-                  : 0;
-              event.sender.send("scan-progress", {
-                percentage,
-                scannedFiles,
-                totalFiles,
-              } as ScanProgress);
-            } catch (error: any) {
-              console.warn(`Failed to scan ${fullPath}: ${error.message}`);
             }
           }
+        } catch (err) {
+          console.warn(
+            `SCAN-DIRECTORY: Failed to read directory ${currentDir}:`,
+            err
+          );
         }
       };
 
@@ -105,22 +153,24 @@ ipcMain.handle(
       await scanDir(dir);
       const durationMs = Date.now() - start;
       const lastScanDate = new Date().toISOString();
-      console.log(lastScanDate);
-      
+      console.log(
+        `SCAN-DIRECTORY: Scan completed in ${durationMs}ms with ${threats.length} threats`
+      );
+
       appendScanResult({
         time: lastScanDate,
         threats,
         filesScanned: scannedFiles,
         action: "threatScan",
       });
-      
+
       return { totalFiles, threats, durationMs };
     } catch (error: any) {
+      console.error("SCAN-DIRECTORY: Unexpected error:", error);
       return { error: (error as Error).message };
     }
   }
 );
-
 ipcMain.handle(
   "get-last-scan-details",
   async (): Promise<
@@ -130,9 +180,9 @@ ipcMain.handle(
     try {
       // Ensure directory exists and await the operation
       await ensureScanResultsDir();
-      
+
       const logPath = path.join(scanResultsDir, "scan-results.json");
-      
+
       // Check if the file exists before trying to read it
       try {
         await fs.access(logPath);
